@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>    
+    <%- include('../partials/head'); %>    
+    <title>Error Page</title>
+</head>
+
+<body>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <h1 class="display-4"><%= message %></h1>
+          <p class="lead"><%= error.status %></p>
+          <hr class="my-4">
+          <pre><%= error.stack %></pre>
+        </div>
+      </div>
+</body>
+<%- include('../partials/script'); %>
+
+</html>
