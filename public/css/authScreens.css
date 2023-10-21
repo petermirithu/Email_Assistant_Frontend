@@ -1,7 +1,3 @@
-body{
-    overflow: hidden !important;  
-}
-
 .leftSide{
     background-image: url('/images/emails.jpeg');
     background-position: center;  
