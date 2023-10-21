@@ -5,7 +5,7 @@ var index = require('./routes/index');
 var app = express();
 
 const NodeMailListener = require('./utils/mailListener');
-const mailListener = new NodeMailListener();
+// const mailListener = new NodeMailListener();
 
 
 // view engine setup

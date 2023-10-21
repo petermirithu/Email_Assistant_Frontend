@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head'); %>
+        <title>Email Assistant</title>
+        <link rel="stylesheet" href="css/global.css">
+        <link rel="stylesheet" href="css/authScreens.css">
+</head>
+
+<body>
+    <!-- Page Content -->
+    <div class="row">
+        <div class="col-md-6 leftSide">
+        </div>
+        <div class="col-md-6 center rightSide">
+            <h1>Create an Account</h1>
+            <h5><i>"Enter your details to get started!"</i></h5>
+            <form>
+                <fieldset>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="fNameInput" class="form-label mt-4">First Name</label>
+                                <input type="text" class="form-control rounded" id="fNameInput"
+                                    placeholder="Enter first name">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="lNameInput" class="form-label mt-4">Last Name</label>
+                                <input type="text" class="form-control rounded" id=";NameInput"
+                                    placeholder="Enter last name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="emailInput" class="form-label mt-4">Email address</label>
+                        <input type="email" class="form-control rounded" id="emailInput" aria-describedby="emailHelp"
+                            placeholder="Enter email">
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                            else.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="passwordInput" class="form-label mt-4">Password</label>
+                        <input type="password" class="form-control" id="passwordInput" placeholder="Password"
+                            autocomplete="off">
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-outline-primary submitBtn">Sign Up</button>
+                    </div>
+                </fieldset>
+            </form>
+            <button type="button" class="btn btn-link btn-sm">
+                <a href="signIn">Already have an account? Sign In!</a>
+            </button>
+        </div>
+    </div>
+</body>
+<%- include('../partials/script'); %>
+
+</html>

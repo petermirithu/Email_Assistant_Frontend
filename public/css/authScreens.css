@@ -1,0 +1,24 @@
+body{
+    overflow: hidden !important;  
+}
+
+.leftSide{
+    background-image: url('/images/emails.jpeg');
+    background-position: center;  
+    background-size: cover;    
+    height: 100vh;       
+}
+
+.rightSide{
+    padding:30px;         
+}
+
+.submitBtn{
+    margin-top: 5%;    
+}
+
+.btn-link{
+    margin-top: 5%;
+    width: 100%;
+    text-align: center;
+}
