@@ -1,0 +1,28 @@
+body{
+    overflow: hidden;
+}
+
+.content{
+    padding:30px
+}
+
+.tasks{
+    padding: 10px;
+    height: 34vh
+}
+
+.tracker{
+    margin-top: 20px;
+    padding: 10px;
+    height: 34vh;
+    overflow: auto !important;
+}
+
+.task-list{
+    width: 100%;
+}
+
+.noTasks{
+    margin-top: 40px;
+    text-align: center;
+}
