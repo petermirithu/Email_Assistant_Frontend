@@ -9,7 +9,7 @@ class CacheService {
         localStorage.setItem('user_profile', JSON.stringify(payload));        
     }
 
-    getUserData= async (payload) => {    
+    getUserData= async () => {    
         const cachedUser = localStorage.getItem('user_profile') || null;        
 
         if (cachedUser!=null ){
@@ -18,6 +18,10 @@ class CacheService {
         else{
             return null
         }
+    }
+
+    clearCache = async () => {
+        localStorage.clear()
     }
    
 }

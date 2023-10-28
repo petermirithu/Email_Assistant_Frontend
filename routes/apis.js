@@ -36,9 +36,9 @@ router.post('/sign_up_user', async function (req, res) {
         req.flash('warning', warning)
         res.redirect('/signUp')
     } else {
-        await userService.createUserAccount(payload).then(response => {
-            req.flash('success', 'You are now registered and can Log in for verification purpose.'),
-                res.redirect('/signIn')
+        await userService.createUserAccount(payload).then(async response => {
+            await cacheService.setUserData(response.data)                            
+            res.redirect('/')            
         }).catch(error => {
             req.flash('error', "Ooops! Seems there was a problem while trying to create your account."),
                 res.redirect('/signUp')
