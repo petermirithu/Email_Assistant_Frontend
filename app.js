@@ -4,7 +4,6 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var flash = require('connect-flash');
 var session = require('cookie-session');
-const passport = require('passport');
 
 require('dotenv').config()
 
@@ -27,31 +26,23 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({ cookie: { maxAge: 60000 }, 
+app.use(session({
+    cookie: { maxAge: 60000 },
     secret: 'wosdwswdwdwdwqdwqddhjh%$$qwdwssdfsfdsdsfsdfsdfdsfdqdqwot',
-    resave: false, 
-    saveUninitialized: false}));
+    resave: false,
+    saveUninitialized: false
+}));
 
-    // express-messages middleware for flash
+// express-messages middleware for flash
 app.use(flash());
 app.use((req, res, next) => {
-  res.locals.errors = req.flash("error");
-  res.locals.warnings = req.flash("warning");
-  res.locals.infos = req.flash("info");
-  res.locals.successes = req.flash("success");
-  next();
-});
-
-// passport middleware
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.use(function(req,res,next){
-    if (req.user) {
-        res.locals.user = req.user;        
-    }
+    res.locals.errors = req.flash("error");
+    res.locals.warnings = req.flash("warning");
+    res.locals.infos = req.flash("info");
+    res.locals.successes = req.flash("success");
     next();
 });
+
 
 app.use('/', index);
 app.use('/apis', apis);
@@ -62,9 +53,6 @@ app.use(function (req, res, next) {
     err.status = 404;
     next(err);
 });
-
-// passport config
-require('./config/passport')(passport);
 
 // development error handler
 // will print stacktrace
@@ -82,7 +70,7 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function (err, req, res, next) {
     res.status(err.status || 500);
-    res.render('pages/error', {        
+    res.render('pages/error', {
         message: err.message,
         error: {}
     });

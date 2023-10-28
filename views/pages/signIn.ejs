@@ -15,20 +15,22 @@
             <div class="col-md-6 leftSide">
             </div>
             <div class="col-md-6 center rightSide">
+                <%- include('../partials/notifications'); %>
+                
                 <h1>Welcome to Mail Whizz, </h1>
                 <h5><i>"Streamline Your Inbox, Simplify Your Life!"</i></h5>
-                <form>
+                <form method="post" action="/apis/sign_in_user">
                     <fieldset>
                         <div class="form-group">
                             <label for="emailInput" class="form-label mt-4">Email address</label>
-                            <input type="email" class="form-control rounded" id="emailInput"
+                            <input name="email" value="pyramyra33@gmail.com" type="email" class="form-control rounded" id="emailInput"
                                 aria-describedby="emailHelp" placeholder="Enter email">
                             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
                                 else.</small>
                         </div>
                         <div class="form-group">
                             <label for="passwordInput" class="form-label mt-4">Password</label>
-                            <input type="password" class="form-control" id="passwordInput" placeholder="Password"
+                            <input name="password" value="Lotus@009" type="password" class="form-control" id="passwordInput" placeholder="Password"
                                 autocomplete="off">
                         </div>
                         <div class="d-grid gap-2">
