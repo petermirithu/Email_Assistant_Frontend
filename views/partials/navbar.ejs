@@ -1,55 +1,56 @@
 <style>
-    .line {
-        height: 40px;
-        width: 7px;
-        border-radius: 100px;
-        margin-right: 20px;
-    }
+  .line {
+    height: 40px;
+    width: 7px;
+    border-radius: 100px;
+    margin-right: 20px;
+  }
 </style>
 <nav class="navbar navbar-expand-lg bg-light" data-bs-theme="light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Mail Whizz</a>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Mail Whizz</a>
 
-        <ul class="navbar-nav me-auto">
-            <li class="nav-item line card">
-            </li>
-            <li class="nav-item">
-                <img src="/images/gmail.png" alt="Gmail Logo" width="40" height="40" />
-            </li>
-        </ul>
+    <ul class="navbar-nav me-auto">
+      <li class="nav-item line card">
+      </li>
+      <li class="nav-item">
+        <img src="/images/gmail.png" alt="Gmail Logo" width="40" height="40" />
+      </li>
+    </ul>
 
-        <div class="d-flex">
-            <div class="btn-group" role="group">
-                <button id="profile-menu" type="button" class="btn btn-primary btn-sm dropdown-toggle"
-                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="/images/user.png" width="40" height="40" alt="user icon" style="margin-right: 10px;">
-                </button>
-                <div class="dropdown-menu" aria-labelledby="profile-menu">
-                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#profileModal">Profile</a>
-                    <a class="dropdown-item danger" href="#">Sign Out</a>
-                </div>
-            </div>
+    <div class="d-flex">
+      <div class="btn-group" role="group">
+        <button id="profile-menu" type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <img src="/images/user.png" width="40" height="40" alt="user icon" style="margin-right: 10px;">
+        </button>
+        <div class="dropdown-menu" aria-labelledby="profile-menu">
+          <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#profileModal">Profile</a>
+          <a class="dropdown-item danger" href="signOut">Sign Out</a>
         </div>
-        
-        <!-- Modal -->
-        <div class="modal fade modal--centered" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="profileModalLabel">Modal title</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"></span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <p>Modal body text goes here.</p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-primary">Save changes</button>
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-              </div>
-            </div>
-          </div>                
+      </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade modal--centered" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="profileModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true"></span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Modal body text goes here.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </nav>

@@ -1,0 +1,53 @@
+<div class="container-fluid">
+    <% if(successes){ %>
+        <div class="notification">
+            <% for(success in successes){ %>
+                <div class="alert alert-dismissible alert-success">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <p class="mb-0">
+                        <%= successes[success] %>
+                    </p>
+                </div>
+                <% } %>
+        </div>
+        <% } %>
+
+        <% if(infos){ %>
+            <div class="notification">
+                <% for(info in infos){ %>
+                    <div class="alert alert-dismissible alert-primary">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        <p class="mb-0">
+                            <%= infos[info] %>
+                        </p>
+                    </div>
+                    <% } %>
+            </div>
+            <% } %>
+
+            <% if(warnings){ %>
+                <div class="notification">
+                    <% for(warning in warnings){ %>
+                        <div class="alert alert-dismissible alert-warning">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            <p class="mb-0">
+                                <%= warnings[warning] %>
+                            </p>
+                        </div>
+                        <% } %>
+                </div>
+                <% } %>
+
+                    <% if(errors){ %>
+                        <div class="notification">
+                            <% for(error in errors){ %>
+                                <div class="alert alert-dismissible alert-danger">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                    <p class="mb-0">
+                                        <%= errors[error] %>
+                                    </p>
+                                </div>
+                                <% } %>
+                        </div>
+                        <% } %>
+</div>
