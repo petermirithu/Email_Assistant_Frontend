@@ -1,15 +1,23 @@
 var { MailListener } = require("mail-listener5");
+const subscriptionService = require('../services/subscription');
 
 class NodeMailListener {
-    constructor() {        
-        var mailListener = new MailListener({
-            username: "pyramyra33@gmail.com",
-            password: "ofqklekyeygzpcbe",
+    constructor() {
+        this.mailListener = null;
+    }
+
+    initListener = (email, password) => {
+        email="pyramyra33@gmail.com",
+        password="ofqklekyeygzpcbe",
+
+        this.mailListener = new MailListener({
+            username: email,
+            password: password,            
             host: "smtp.gmail.com",
             port: 993,
             tls: true,
-            connTimeout: 30000, 
-            authTimeout: 10000,            
+            connTimeout: 30000,
+            authTimeout: 10000,
             keepalive: true,
             // debug: console.log, // Or your custom function with only one incoming argument. Default: null
             autotls: 'never', // default by node-imap
@@ -21,54 +29,70 @@ class NodeMailListener {
             attachments: true, // download attachments as they are encountered to the project directory
             attachmentOptions: { directory: "attachments/" } // specify a download directory for attachments
         });
-        
-        mailListener.start(); // start listening
 
-        // stop listening
-        //mailListener.stop();
-
-        mailListener.on("server:connected", function () {
+        this.mailListener.on("server:connected", function () {
             console.log("imapConnected");
         });
 
-        mailListener.on("mailbox", function (mailbox) {
-            console.log("Total number of mails: ", mailbox.messages.total); // this field in mailbox gives the total number of emails
+        this.mailListener.on("mailbox", function (mailbox) {
+            console.log("Total number of mails: ", mailbox.messages.total); // this field in mailbox gives the total number of emails                        
+            subscriptionService.updateMailBoxTotal(mailbox.messages.total);
         });
 
-        mailListener.on("server:disconnected", function () {
+        this.mailListener.on("server:disconnected", function () {
             console.log("imapDisconnected");
         });
 
-        mailListener.on("error", function (err) {
-            console.log(err);
+        this.mailListener.on("error", function (err) {
+            console.log(err)
+            if (err?.textCode == "AUTHENTICATIONFAILED") {                
+                subscriptionService.sendEmailAuthError("The password you entered for your email iMAP is wrong. Please correct your password.\nNo email tracking is happenning now!");                
+            }
+            else if(err?.textCode == "ETIMEDOUT"){
+                subscriptionService.sendEmailAuthError("Ooops! Stopped listening to emails due to in activity! Login again to verify that your still around.");                                
+            }
+            else {
+                subscriptionService.sendEmailAuthError("Ooops! Something went wrong while trying to listen to your emails");                                
+            }
         });
 
-        mailListener.on("headers", function (headers, seqno) {
+        this.mailListener.on("headers", function (headers, seqno) {
             // do something with mail headers
             // console.log("***** Header **** --- "+seqno)
             // console.log(headers)
         });
 
-        mailListener.on("body", function (body, seqno) {
+        this.mailListener.on("body", function (body, seqno) {
             // do something with mail body
-            console.log("***** Email Body ****  --- "+seqno)            
+            console.log("***** Email Body ****  --- " + seqno)
             console.log(body)
-            
+
         })
 
-        mailListener.on("attachment", function (attachment, path, seqno) {
+        this.mailListener.on("attachment", function (attachment, path, seqno) {
             // do something with attachment
         });
 
-        mailListener.on("mail", function (mail, seqno) {
+        this.mailListener.on("mail", function (mail, seqno) {
             // do something with the whole email as a single object
             // console.log("***** Mail **** --- "+seqno)
             // console.log(mail)
         })
+
+    }
+
+    startMailListener = () => {
+        this.mailListener.start(); // start listening
+    }
+
+    stopMailListener = () => {
+        this.mailListener.stop(); // stop listening
     }
 }
 
 // Sites to checkout!!!!!!!!!!!
 // https://github.com/Akinmyde/email-reader
 
-module.exports = NodeMailListener;
+const nodeMailListener = new NodeMailListener();
+
+module.exports = nodeMailListener;

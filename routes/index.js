@@ -1,6 +1,7 @@
 var express = require('express');
 const userService = require('../services/userService');
 const cacheService = require('../services/cacheService');
+const emailService = require('../services/emailService');
 var router = express.Router();
 
 
@@ -18,6 +19,7 @@ router.get('/', userService.isAuthenticated, function (req, res, next) {
 
 router.get('/signOut', userService.isAuthenticated, async function (req, res) {    
     await cacheService.clearCache();    
+    // await emailService.stopEmailTracking();
     res.redirect('/signIn')
 })
 

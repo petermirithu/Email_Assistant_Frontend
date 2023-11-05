@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var flash = require('connect-flash');
 var session = require('cookie-session');
+const { Server } = require('socket.io');
 
 require('dotenv').config()
 
@@ -11,10 +12,6 @@ var app = express();
 
 var index = require('./routes/index');
 var apis = require('./routes/apis');
-
-const NodeMailListener = require('./utils/mailListener');
-// const mailListener = new NodeMailListener();
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -77,5 +74,9 @@ app.use(function (err, req, res, next) {
 });
 
 const server = app.listen(3000, () => console.log(`Express server listening on port 3000`));
+
+const io = new Server(server);
+
+require('./utils/listeners')(io);
 
 module.exports = app;

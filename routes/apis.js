@@ -3,8 +3,8 @@ var userService = require('../services/userService');
 var express = require('express');
 var validator = require("email-validator");
 const cacheService = require('../services/cacheService');
+const emailService = require('../services/emailService');
 var router = express.Router();
-
 
 router.post('/sign_up_user', async function (req, res) {
     const payload = {
@@ -71,6 +71,7 @@ router.post('/sign_in_user', async function (req, res, next) {
         await userService.loginUser(payload).then(
             async response => {                
                 await cacheService.setUserData(response.data)                            
+                emailService.startEmailTracking(payload.email, payload.password)
                 res.redirect('/')
             }).catch(err => {
                 if (err?.response?.data == "invalidCredentials") {
