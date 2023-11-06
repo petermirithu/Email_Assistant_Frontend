@@ -38,7 +38,7 @@ class NodeMailListener {
             subscriptionService.updateMailConnectionStatus("connected");
         });
 
-        this.mailListener.on("mailbox", function (mailbox) {            
+        this.mailListener.on("mailbox", function (mailbox) {              
             subscriptionService.updateMailBoxTotal(mailbox.messages.total); // this field in mailbox gives the total number of emails                        
         });
 

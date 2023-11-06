@@ -35,13 +35,20 @@
         }
     });
 
-    socket.on('display_mails_tasks', (value) => {
-        const item1 = document.getElementById("inboxMails");
-        const item2 = document.getElementById("tasksLoader");
+    socket.on('display_mails_tasks', (value) => {        
+        const inboxMails = document.getElementById("inboxMails");
+        const taskList = document.getElementById("taskList");
 
-        item1.innerHTML = null;
+        inboxMails.innerHTML = null;
+        taskList.innerHTML = null;
 
-        if (value?.emails?.length > 0) {                    
+        if (value?.emails?.length > 0) {
+            const unReadEmails = document.getElementById("unReadEmails");
+            unReadEmails.innerHTML = value.emails.filter(x=>x.read==false).length;            
+
+            const processedMails = document.getElementById("processedMails");
+            processedMails.innerHTML = value.emails.length;
+
             for (let email of value?.emails) {
                 const card = `<div class="cardX">
                                 <div class="mailAvatar bg-info">
@@ -53,18 +60,56 @@
                                     <p class="from">From: ${email.from_email}</p>
                                 </div>
                             </div>`
-                item1.innerHTML += card
+                inboxMails.innerHTML += card
             }
         }
         else {
-            item1.innerText = "No have no mails which have been processed";
+            inboxMails.innerText = "No have no mails which have been processed";
         }
 
+        
+        const progressBar = document.getElementById("progressBar");
+        
         if (value?.tasks?.length == 0) {
-            item2.innerText = "You have no pending tasks";
+            taskList.innerText = "You have no pending tasks";
+            progressBar.style.width = "0%"
         }
         else {
-            item2.innerText = "Yet to add code to show the tasks";
+            const totalTasks = value.tasks.length;
+            const doneTasks = value.tasks.filter(x=>x.done==true).length;
+
+            progressBar.style.width = `${Math.floor((doneTasks/totalTasks)*100)}%`;
+
+            for (let task of value?.tasks) {
+                let badge = null;
+
+                if (task.category.toLowerCase() == "urgent") {
+                    badge = `<span class="badge rounded-pill bg-red">${task.category}</span>`
+                }
+                else if (task.category.toLowerCase() == "deadline") {                    
+                    badge = `<span class="badge rounded-pill bg-danger">${task.category}</span>`
+                }
+                else if (task.category.toLowerCase() == "critical") {
+                    badge = `<span class="badge rounded-pill bg-purple">${task.category}</span>`
+                }
+                else if (task.category.toLowerCase() == "reminder") {
+                    badge = `<span class="badge rounded-pill bg-orange">${task.category}</span>`
+                }
+                else {
+                    badge = `<span class="badge rounded-pill bg-warning">${task.category}</span>`
+                }
+
+                const card = `<div class="taskCard bg-light">
+                <div class="form-check">
+                  <p class="timeAgo">${task.timeAgo}</p>
+                  <input class="form-check-input bg-success}" type="checkbox" id="flexCheckDefault" ${(task.done==true?'checked':'')}>                
+                  <label class="form-check-label">
+                    ${badge} ${task.title}
+                  </label>
+                </div>                
+              </div>`
+              taskList.innerHTML += card
+            }
         }
     });
 </script>

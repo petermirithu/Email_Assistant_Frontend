@@ -17,14 +17,14 @@
 
   .tasks {
     padding: 10px;
-    height: 34vh
+    height: 40vh
   }
 
   .tracker {
     margin-top: 20px;
     padding: 10px;
-    height: 34vh;
-    overflow: auto !important;
+    height: 28vh;
+    overflow: hidden !important;
   }
 
   .task-list {
@@ -34,6 +34,32 @@
   #loader {
     margin-top: 40px;
     text-align: center;
+  }
+
+  .taskCard{
+    text-align: left;
+    padding: 10px;    
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+
+  .timeAgo{
+    float: right;
+    font-size: small;
+    margin: 0px;
+    margin-top: 4px;
+  }
+
+  .form-check-input{
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  
+  #unReadEmails, #processedMails, #totalEmails{
+    font-weight: bold;
+    font-size: 3em;
   }
 </style>
 
@@ -52,17 +78,33 @@
           <div class="card tasks">
             <h5>Tasks Status</h5>
             <div class="progress">
-              <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar"
-                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+              <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar"
+                aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-            <div class="task-list">
-              <p id="tasksLoader">You have no pending tasks</p>
+            <div id="taskList" style="text-align: center; margin-top: 10px;">
+              You have no pending tasks              
             </div>
           </div>
 
           <div class="card tracker">
             <h5>Email Tracked</h5>
-            <p>Total mails is:- <span id="totalEmails">0</span> </p>
+            <div class="row">
+              <div class="col-md-3">                
+                <iframe src="https://lottie.host/?file=a2d9b70d-501c-45cd-915c-617c29fa1d34/9E6EigDl72.lottie" width="200px" height="200px"></iframe>
+              </div>
+              <div class="col-md-3" style="text-align: center; margin-top: 5%;">
+                <h1 id="unReadEmails">0</h1>
+                <p>Un Read Emails</p>
+              </div>
+              <div class="col-md-3" style="text-align: center; margin-top: 5%;">
+                <h1 id="processedMails">0</h1>
+                <p>Processed mails</p>
+              </div>
+              <div class="col-md-3" style="text-align: center; margin-top: 5%;">
+                <h1 id="totalEmails">0</h1>
+                <p>Total Inbox Mails</p>
+              </div>              
+            </div>                        
           </div>
         </div>
       </div>
@@ -72,13 +114,14 @@
 
   <script>
     window.onload = function () {
-      const item1 = document.getElementById("inboxMails");
-      const item2 = document.getElementById("tasksLoader");
-      
-      item1.innerText = "Loading mails ...";
-      item2.innerText = "Loading tasks ...";
+      // return
+      const inboxMails = document.getElementById("inboxMails");
+      const taskList = document.getElementById("taskList");
 
-      socket.emit("fetch_mails", "fetchMails");      
+      inboxMails.innerText = "Loading mails ...";
+      taskList.innerText = "Loading tasks ...";
+
+      socket.emit("fetch_mails", "fetchMails");
     };
   </script>
 

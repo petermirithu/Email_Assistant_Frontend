@@ -1,6 +1,19 @@
 .center {
-    margin: auto;        
+    margin: auto;
 }
-.form-control{
-    border-radius: 100px !important;    
+
+.form-control {
+    border-radius: 100px !important;
+}
+
+.bg-orange {
+    background-color: #fb5607;
+}
+
+.bg-purple {
+    background-color: #5f0f40;
+}
+
+.bg-red {
+    background-color: #9a031e;
 }
