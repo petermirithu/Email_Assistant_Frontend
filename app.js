@@ -73,7 +73,7 @@ app.use(function (err, req, res, next) {
     });
 });
 
-const server = app.listen(3000, () => console.log(`Express server listening on port 3000`));
+const server = app.listen(3000, () => console.log(`🖥 Express server listening on port 3000 🚀`));
 
 const io = new Server(server);
 

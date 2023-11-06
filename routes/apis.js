@@ -73,8 +73,7 @@ router.post('/sign_in_user', async function (req, res, next) {
                 await cacheService.setUserData(response.data)                            
                 emailService.startEmailTracking(payload.email, payload.password)
                 res.redirect('/')
-            }).catch(err => {
-                console.log(err)
+            }).catch(err => {                
                 if (err?.response?.data == "invalidCredentials") {
                     req.flash('warning', "Invalid Credentials Provided. Please enter the correct details.")
                 }

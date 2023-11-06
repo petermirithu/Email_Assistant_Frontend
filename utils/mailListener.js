@@ -23,7 +23,7 @@ class NodeMailListener {
             connTimeout: 30000,
             authTimeout: 10000,
             keepalive: true,
-            // debug: console.log, // Or your custom function with only one incoming argument. Default: null
+            debug: console.log, // Or your custom function with only one incoming argument. Default: null
             autotls: 'never', // default by node-imap
             tlsOptions: { rejectUnauthorized: false },
             mailbox: "INBOX", // mailbox to monitor
@@ -81,11 +81,7 @@ class NodeMailListener {
                 from_email: mail.from.text, 
                 body: mail.text,         
                 messageId: mail.messageId       
-            }            
-
-            console.log("***")
-            console.log(payload)
-            console.log("***")
+            }                        
 
             await userService.processEmail(payload).then(response=>{                
                 return "ok"

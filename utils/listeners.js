@@ -3,7 +3,7 @@ const subscriptionService = require('../services/subscription');
 module.exports = function (io) {
     io.on('connection', (socket) => {
         socket.on('total_emails', (value) => {
-            console.log('Socket says the  value is : ' + value);
+            // Total number of mails.            
         });
     });
 
