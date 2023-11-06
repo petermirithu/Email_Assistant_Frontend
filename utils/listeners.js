@@ -7,10 +7,10 @@ module.exports = function (io) {
         });
     });
 
-    subscriptionService.emailAuthError$.subscribe(
+    subscriptionService.showError$.subscribe(
         (data) => {
             if (data != null) {
-                io.emit("email_auth_error", data);
+                io.emit("show_error", data);
                 data = null;
             }
         });
@@ -22,4 +22,14 @@ module.exports = function (io) {
                 data = null;
             }
         });
+
+    subscriptionService.mailConnectionStatus$.subscribe(
+        (data) => {
+            if (data != null) {
+                io.emit("mail_connection_status", data);
+                data = null;
+            }
+        });
+
+
 }

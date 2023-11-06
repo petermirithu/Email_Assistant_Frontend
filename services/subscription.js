@@ -1,12 +1,12 @@
 var {BehaviorSubject} = require('rxjs');
 
 class SubscriptionService { 
-  // *********** Listener for error messages when logging into the iMAP  ***********  
-  emailAuthError = new BehaviorSubject(null);
-  emailAuthError$ = this.emailAuthError.asObservable();  
+  // *********** Listener for error messages ***********  
+  showError = new BehaviorSubject(null);
+  showError$ = this.showError.asObservable();  
 
-  sendEmailAuthError = async (data) => {    
-    this.emailAuthError.next(data);    
+  setShowError = async (data) => {    
+    this.showError.next(data);    
   }
 
   // *********** Listener for total emails in the mail box  ***********  
@@ -17,6 +17,13 @@ class SubscriptionService {
     this.mailBoxTotal.next(data);    
   }
 
+   // *********** Listener to connection status of emails in the mail box  ***********  
+   mailConnectionStatus = new BehaviorSubject(null);
+   mailConnectionStatus$ = this.mailConnectionStatus.asObservable();  
+ 
+   updateMailConnectionStatus = async (data) => {    
+     this.mailConnectionStatus.next(data);    
+   }
   
 }
 

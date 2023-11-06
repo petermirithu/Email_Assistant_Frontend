@@ -8,12 +8,29 @@
     const socket = io();
     socket.on('mail_box_total', (value) => {
         const item = document.getElementById("totalEmails");
-        item.innerHTML = value;        
+        item.innerHTML = value;
     });
 
-    socket.on('email_auth_error', (value) => {
-        alert(value);      
+    socket.on('show_error', (value) => {
+        alert(value);
     });
 
-    
+    socket.on('mail_connection_status', (value) => {
+        const item = document.getElementById("mailConnectionStatus");
+        item.classList.remove("bg-success");
+        item.classList.remove("bg-info");
+        item.classList.remove("bg-danger");
+        if (value == "connected") {            
+            item.classList.add("bg-success");
+            item.innerHTML = "Connected to Mail";
+        }
+        else if (value == "connecting") {
+            item.classList.add("bg-info");
+            item.innerHTML = "Connecting to Mail ...";
+        }
+        else {
+            item.classList.add("bg-danger");
+            item.innerHTML = "Disconnected from Mail";
+        }
+    });
 </script>
