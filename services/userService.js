@@ -28,8 +28,9 @@ class UserService {
         return Axios.post("/process_email", payload);    
     }
 
-    fetchProcessedEmails = async (userId) => {
-        return Axios.get("/fetch_processed_emails/"+userId);
+    fetchProcessedEmails = async () => {
+        const userData = await cacheService.getUserData()                            
+        return Axios.get("/fetch_processed_emails/"+userData.id);
     }
 }
 

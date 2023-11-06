@@ -13,7 +13,7 @@ router.get('/signUp', function (req, res, next) {
     res.render('pages/signUp');
 });
 
-router.get('/', userService.isAuthenticated, function (req, res, next) {
+router.get('/', userService.isAuthenticated, async function (req, res, next) {        
     res.render('pages/home');    
 });
 

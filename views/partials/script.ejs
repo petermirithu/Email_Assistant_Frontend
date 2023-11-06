@@ -6,6 +6,7 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
     const socket = io();
+
     socket.on('mail_box_total', (value) => {
         const item = document.getElementById("totalEmails");
         item.innerHTML = value;
@@ -20,7 +21,7 @@
         item.classList.remove("bg-success");
         item.classList.remove("bg-info");
         item.classList.remove("bg-danger");
-        if (value == "connected") {            
+        if (value == "connected") {
             item.classList.add("bg-success");
             item.innerHTML = "Connected to Mail";
         }
@@ -31,6 +32,39 @@
         else {
             item.classList.add("bg-danger");
             item.innerHTML = "Disconnected from Mail";
+        }
+    });
+
+    socket.on('display_mails_tasks', (value) => {
+        const item1 = document.getElementById("inboxMails");
+        const item2 = document.getElementById("tasksLoader");
+
+        item1.innerHTML = null;
+
+        if (value?.emails?.length > 0) {                    
+            for (let email of value?.emails) {
+                const card = `<div class="cardX">
+                                <div class="mailAvatar bg-info">
+                                    <span class="text">${email.initials}</span>
+                                </div>
+                                <div class="mailBody">
+                                    <p class="time">${email.timeAgo}</p>
+                                    <p class="subject">${email.subject}</p>
+                                    <p class="from">From: ${email.from_email}</p>
+                                </div>
+                            </div>`
+                item1.innerHTML += card
+            }
+        }
+        else {
+            item1.innerText = "No have no mails which have been processed";
+        }
+
+        if (value?.tasks?.length == 0) {
+            item2.innerText = "You have no pending tasks";
+        }
+        else {
+            item2.innerText = "Yet to add code to show the tasks";
         }
     });
 </script>

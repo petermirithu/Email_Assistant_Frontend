@@ -23,7 +23,7 @@ class NodeMailListener {
             connTimeout: 30000,
             authTimeout: 10000,
             keepalive: true,
-            debug: console.log, // Or your custom function with only one incoming argument. Default: null
+            // debug: null, // Or your custom function with only one incoming argument. Default: null
             autotls: 'never', // default by node-imap
             tlsOptions: { rejectUnauthorized: false },
             mailbox: "INBOX", // mailbox to monitor
@@ -34,7 +34,7 @@ class NodeMailListener {
             attachmentOptions: { directory: "attachments/" } // specify a download directory for attachments
         });
 
-        this.mailListener.on("server:connected", function () {
+        this.mailListener.on("server:connected", function () {            
             subscriptionService.updateMailConnectionStatus("connected");
         });
 
@@ -42,7 +42,7 @@ class NodeMailListener {
             subscriptionService.updateMailBoxTotal(mailbox.messages.total); // this field in mailbox gives the total number of emails                        
         });
 
-        this.mailListener.on("server:disconnected", function () {
+        this.mailListener.on("server:disconnected", function () {            
             subscriptionService.updateMailConnectionStatus("disconnected");
         });
 
@@ -84,7 +84,7 @@ class NodeMailListener {
             }                        
 
             await userService.processEmail(payload).then(response=>{                
-                return "ok"
+                subscriptionService.updateMailProcessed("fetchAll");
             }).catch(error=>{                            
                 subscriptionService.setShowError("Oops! Something went wrong while processing one of your email");
             });

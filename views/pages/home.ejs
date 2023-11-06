@@ -4,40 +4,82 @@
 <head>
   <%- include('../partials/head'); %>
     <title>Mail Whiz</title>
-    <link rel="stylesheet" href="css/home.css">
 </head>
+
+<style>
+  body {
+    overflow: hidden;
+  }
+
+  .content {
+    padding: 30px
+  }
+
+  .tasks {
+    padding: 10px;
+    height: 34vh
+  }
+
+  .tracker {
+    margin-top: 20px;
+    padding: 10px;
+    height: 34vh;
+    overflow: auto !important;
+  }
+
+  .task-list {
+    width: 100%;
+  }
+
+  #loader {
+    margin-top: 40px;
+    text-align: center;
+  }
+</style>
 
 <body>
   <%- include('../partials/navbar'); %>
     <!-- Page Content -->
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-2" style="padding: 0px;">
+        <div class="col-md-3" style="padding: 0px;">
           <%- include('../partials/sideBar'); %>
         </div>
-        <div class="col-md-10 content">
+        <div class="col-md-9 content">
           <h1 class="display-4 welcomeTxt">Hello Pyra 👋🏼!</h1>
           <p class="lead">Ready to be productive? Let get started!</p>
 
           <div class="card tasks">
             <h5>Tasks Status</h5>
             <div class="progress">
-              <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="100"
-                aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+              <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar"
+                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
             </div>
             <div class="task-list">
-              <p class="noTasks">You have no pending tasks</p>
+              <p id="tasksLoader">You have no pending tasks</p>
             </div>
           </div>
 
           <div class="card tracker">
-            <h5>Email Tracked</h5>            
-            <p>Total mails is:- <span id="totalEmails">0</span> </p>            
+            <h5>Email Tracked</h5>
+            <p>Total mails is:- <span id="totalEmails">0</span> </p>
           </div>
         </div>
       </div>
     </div>
 </body>
 <%- include('../partials/script'); %>
+
+  <script>
+    window.onload = function () {
+      const item1 = document.getElementById("inboxMails");
+      const item2 = document.getElementById("tasksLoader");
+      
+      item1.innerText = "Loading mails ...";
+      item2.innerText = "Loading tasks ...";
+
+      socket.emit("fetch_mails", "fetchMails");      
+    };
+  </script>
 
 </html>

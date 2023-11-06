@@ -23,7 +23,6 @@ class CacheService {
     clearCache = async () => {
         localStorage.clear()
     }
-   
 }
 
 const cacheService = new CacheService();

@@ -1,27 +1,87 @@
 <style>
-    .sideBar{
-        padding:10px;        
+    .sideBar {
+        padding: 10px;
         height: 100%;
     }
-    .sideBar h6{
+
+    .sideBar h6 {
         font-weight: bold;
     }
-    .inbox{
+
+    .inbox {
         margin-top: 30px;
         height: 40%;
     }
-    .attachments{
+
+    .attachments {
         height: 40%;
+    }
+
+    .mailAvatar {
+        overflow: visible;
+        border: 0;
+        background-color: transparent;        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+        border-radius: 100%;
+    }
+
+    .mailAvatar span {
+        color: #fff;
+        padding: 5px;
+    }
+
+    .cardX {
+        display: inline-flex;
+        padding-bottom: 3px;
+        border-bottom: 1px solid rgb(229, 229, 229);
+        width: 100%;
+    }
+
+    .mailBody {
+        margin-left: 10px;
+        width: 100%;
+        display: block;
+        overflow: hidden;
+
+    }
+
+    .subject {
+        font-weight: bold;
+        margin: 0px !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .time {
+        font-size: small;
+        margin-right: 1px;
+        float: right;
+    }
+
+    .from {
+        font-size: small;
+        margin: 0px !important;
     }
 </style>
 
 <div class="sideBar bg-light" data-bs-theme="light">
     <div class="inbox">
         <h6>Inbox</h6>
-        <p>No un-read mails</p>
-    </div>    
+        <div id="inboxMails">
+            No have no mails which have been processed                                   
+        </div>                       
+    </div>
     <div class="attachments">
         <h6>Attachments</h6>
         <p>No un-read attachments</p>
-    </div>        
+    </div>
 </div>
+
+<!-- # names=from_email.split(" ")[:-1]                        
+        # initials = ''.join((letter [0].upper() for letter in names))
+
+        moment(yourdate).fromNow() -->
