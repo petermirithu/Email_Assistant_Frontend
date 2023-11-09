@@ -20,7 +20,7 @@
     .mailAvatar {
         overflow: visible;
         border: 0;
-        background-color: transparent;        
+        background-color: transparent;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -34,10 +34,17 @@
     }
 
     .cardX {
-        display: inline-flex;
-        padding-bottom: 3px;
+        display: inline-flex;        
         border-bottom: 1px solid rgb(229, 229, 229);
         width: 100%;
+        cursor: pointer;
+        text-decoration: none;
+        padding: 5px;
+        border-radius: 20px;
+    }
+
+    .cardX:hover{                
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     }
 
     .mailBody {
@@ -68,20 +75,32 @@
     }
 </style>
 
-<div class="sideBar bg-light" data-bs-theme="light">
+<div class="sideBar bg-light" data-bs-theme="light">    
     <div class="inbox">
         <h6>Inbox</h6>
         <div id="inboxMails">
-            No have no mails which have been processed                                   
-        </div>                       
+            <!-- No have no mails which have been processed -->
+            <div class="cardX" onclick="goToEmailDetailsSection('weekly meeting')">
+                <div class="mailAvatar bg-info">
+                    <span class="text">PM</span>
+                </div>
+                <div class="mailBody">
+                    <p class="time">4 min ago</p>
+                    <p class="subject">Weekly meeting</p>
+                    <p class="from">From: Peter M.K</p>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="attachments">
         <h6>Attachments</h6>
         <p>No un-read attachments</p>
     </div>
 </div>
-
-<!-- # names=from_email.split(" ")[:-1]                        
-        # initials = ''.join((letter [0].upper() for letter in names))
-
-        moment(yourdate).fromNow() -->
+<script>
+    const goToEmailDetailsSection = (param) => {                
+        $("#dashboardBtn").show()
+        $("#homeSection").slideUp("slow");
+        $("#emailDetailsSection").slideDown("slow");
+    }    
+</script>

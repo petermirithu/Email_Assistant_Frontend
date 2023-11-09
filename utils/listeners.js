@@ -4,31 +4,40 @@ const moment = require('moment');
 
 module.exports = function (io) {
     io.on('connection', (socket) => {
-        socket.on('fetch_mails', async (value) => {
-            await userService.fetchProcessedEmails().then(response => {
-                for (let email of response.data.emails) {
-                    const timeAgo = moment(new Date(email.created_at)).fromNow()
-                    email["timeAgo"] = timeAgo;
+        let emails = []
+        let tasks = [];
 
-                    let namesList = email.from_email.split(" ");
-                    if (namesList.length > 1) {
-                        email["initials"] = `${namesList[0][0]}${namesList[1][0]}`.toUpperCase();
+        socket.on('fetch_mails', async (page) => {
+            if (page == "home") {
+                await userService.fetchProcessedEmails().then(response => {
+                    emails = response.data.emails;
+                    tasks = response.data.tasks;
+
+                    for (let email of emails) {
+                        const timeAgo = moment(new Date(email.created_at)).fromNow()
+                        email["timeAgo"] = timeAgo;
+
+                        let namesList = email.from_email.split(" ");
+                        if (namesList.length > 1) {
+                            email["initials"] = `${namesList[0][0]}${namesList[1][0]}`.toUpperCase();
+                        }
+                        else {
+                            email["initials"] = `${namesList[0][0]}`.toUpperCase();
+                        }
                     }
-                    else {
-                        email["initials"] = `${namesList[0][0]}`.toUpperCase();
+
+                    for (let task of tasks) {
+                        const timeAgo = moment(new Date(task.created_at)).fromNow()
+                        task["timeAgo"] = timeAgo;
                     }
-                }
-
-                for (let task of response.data.tasks) {
-                    const timeAgo = moment(new Date(task.created_at)).fromNow()
-                    task["timeAgo"] = timeAgo;
-                }
-
-                io.emit("display_mails_tasks", response.data);
-
-            }).catch(error => {
-                console.log(error)
-            });
+                    io.emit("display_mails_tasks", {emails:emails, tasks:tasks});
+                }).catch(error => {
+                    console.log(error)
+                });
+            }
+            else{
+                io.emit("display_mails_tasks", {emails:emails, tasks:tasks});
+            }
         });
     });
 

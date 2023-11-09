@@ -14,7 +14,7 @@ router.get('/signUp', function (req, res, next) {
 });
 
 router.get('/', userService.isAuthenticated, async function (req, res, next) {        
-    res.render('pages/home');    
+    res.render('pages/dashboard');    
 });
 
 router.get('/signOut', userService.isAuthenticated, async function (req, res) {    

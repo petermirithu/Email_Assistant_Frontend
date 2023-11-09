@@ -50,7 +50,7 @@
             processedMails.innerHTML = value.emails.length;
 
             for (let email of value?.emails) {
-                const card = `<div class="cardX">
+                const card = `<button class="cardX">
                                 <div class="mailAvatar bg-info">
                                     <span class="text">${email.initials}</span>
                                 </div>
@@ -59,7 +59,7 @@
                                     <p class="subject">${email.subject}</p>
                                     <p class="from">From: ${email.from_email}</p>
                                 </div>
-                            </div>`
+                            </button>`
                 inboxMails.innerHTML += card
             }
         }

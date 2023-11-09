@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head'); %>
+        <title>Mail Whiz</title>
+</head>
+<style>
+    #homeSection{
+        display: none;
+    }
+    #emailDetailsSection{
+        display: none;
+    }
+</style>
+<body>
+    <%- include('../partials/navbar'); %>
+        <!-- Page Content -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3" style="padding: 0px;">
+                    <%- include('../partials/sideBar'); %>
+                </div>
+                <div class="col-md-9 content">
+                    <div id="homeSection">
+                        <%- include('../components/home'); %>
+                    </div>
+
+                    <div id="emailDetailsSection">
+                        <%- include('../components/emailDetails'); %>
+                    </div>                
+                </div>
+            </div>
+        </div>
+</body>
+<script>
+    window.onload = function () {
+        $("#homeSection").slideDown("slow");
+    }    
+</script>
+</html>

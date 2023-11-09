@@ -4,6 +4,14 @@
     width: 7px;
     border-radius: 100px;
     margin-right: 20px;
+  }  
+  #dashboardBtn{
+    margin-right: 20px;
+    cursor: pointer;
+    display: none;
+  }
+  #dashboardBtn:hover{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   }
 </style>
 <nav class="navbar navbar-expand-lg bg-light" data-bs-theme="light">
@@ -17,8 +25,13 @@
         <img src="/images/gmail.png" alt="Gmail Logo" width="40" height="40" />
       </li>
     </ul>
-    
-    <span id="mailConnectionStatus" class="badge rounded-pill bg-danger" style="margin-right: 20px;">Disconnected from Mail</span>    
+
+    <span id="dashboardBtn" onclick="goToHomeSection()">
+      <a>Back to Dashboard</a>     
+    </span>
+
+    <span id="mailConnectionStatus" class="badge rounded-pill bg-danger" style="margin-right: 20px;">Disconnected from
+      Mail</span>
 
     <div class="d-flex">
       <div class="btn-group" role="group">
@@ -56,3 +69,10 @@
     </div>
   </div>
 </nav>
+<script>
+  const goToHomeSection = () => {                
+      $("#dashboardBtn").hide()
+      $("#emailDetailsSection").slideUp("slow");
+      $("#homeSection").slideDown("slow");
+  }    
+</script>
