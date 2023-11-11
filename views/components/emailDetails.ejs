@@ -37,8 +37,9 @@
 </style>
 
 <body>
-    <div id="successToast" class="toast align-items-center text-bg-success border-0 position-absolute top-0 start-50 translate-middle-x" role="alert"
-        aria-live="assertive" aria-atomic="true">
+    <div id="successToast"
+        class="toast align-items-center text-bg-success border-0 position-absolute top-0 start-50 translate-middle-x"
+        role="alert" aria-live="assertive" aria-atomic="true">
         <div class="d-flex">
             <div class="toast-body">
                 Successfully sent your message reply
@@ -71,8 +72,10 @@
                 <h5 class="title">How can I help you with this Email?</h5>
                 <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
                     data-bs-target="#replyMailModal" onclick="getReplySuggestion()">Generate reply suggestion</button>
-                <button type="button" class="btn btn-outline-info">Manually reply to email</button>
-                <button type="button" class="btn btn-outline-light">Get Summary</button>
+                <button type="button" class="btn btn-outline-info" data-bs-toggle="modal"
+                    data-bs-target="#replyMailModal" onclick="openReplyManualy()">Manually reply to email</button>
+                <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
+                    data-bs-target="#summaryMailModal" onclick="generateEmailSummary()">Get Summary</button>
                 <button type="button" class="btn btn-outline-dark">Mark as Read</button>
             </div>
         </div>
@@ -95,7 +98,8 @@
                             aria-describedby="emailHelp" placeholder="Enter email">
 
                         <label for="emailBodyText" class="form-label mt-4">Email Body:-</label>
-                        <textarea class="form-control" id="emailBodyText" rows="10" spellcheck="true"></textarea>
+                        <textarea class="form-control" id="emailBodyText" rows="10" spellcheck="true"
+                            placeholder="Enter your message here"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -107,14 +111,54 @@
         </div>
     </div>
 
+    <!-- Summary Modal -->
+    <div class="modal fade" id="summaryMailModal" tabindex="-1" aria-labelledby="summaryMailModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="summaryMailModalLabel">Summary of Email</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card" id="mailSummarySection" style="background-color: white; padding: 10px;">
+                        <p>Generating email summary ...</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 <script>
+    const generateEmailSummary = () => {
+        const emailDetailBody = document.getElementById("emailDetailBody").innerHTML;
+        socket.emit("generate_mail_summary", emailDetailBody);
+    }
+
+    const openReplyManualy = () => {
+        const replyMailModalLabel = document.getElementById("replyMailModalLabel");
+        replyMailModalLabel.innerHTML = "Reply Manually";
+
+        const emailBodyText = document.getElementById("emailBodyText");
+        emailBodyText.value = null;
+
+        const emailDetailFrom = document.getElementById("emailDetailFrom");
+        const emailReplyTo = document.getElementById("emailReplyTo");
+        emailReplyTo.value = emailDetailFrom.innerHTML.split(":- ")[1];
+    }
+
     const getReplySuggestion = () => {
         const emailDetailBody = document.getElementById("emailDetailBody").innerHTML;
         socket.emit("generate_reply_suggestion", emailDetailBody);
     }
 
-    const sendReply = () => {                
+    const sendReply = () => {
         const emailReplyTo = document.getElementById("emailReplyTo").value;
         const emailDetailTitle = document.getElementById("emailDetailTitle").innerHTML;
         const emailBodyText = document.getElementById("emailBodyText").value;

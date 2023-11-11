@@ -36,6 +36,10 @@ class UserService {
     generateReplySuggestion = async (payload) => {                                
         return Axios.post("/generate_reply_suggestion", payload);
     }
+
+    generateMailSummary = async (payload) => {                                
+        return Axios.post("/generate_mail_summary", payload);
+    }
 }
 
 const userService = new UserService();

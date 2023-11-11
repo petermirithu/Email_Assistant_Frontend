@@ -15,11 +15,7 @@ class NodeMailSender {
   sendMail = async (mailOptions) => {
     const userData = await cacheService.getUserData();
     mailOptions.from = userData.email;
-
-
-    console.log(mailOptions);
-    // return
-
+        
     this.transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
         console.log(error);

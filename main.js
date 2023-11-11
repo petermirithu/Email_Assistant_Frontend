@@ -12,7 +12,9 @@ const createWindow = () => {
         height: height,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js')
-        }
+        },
+        icon: '/public/images/icon.png',        
+
     })
 
     mainWindow.loadURL('http://localhost:3000')

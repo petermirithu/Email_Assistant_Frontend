@@ -51,9 +51,16 @@ module.exports = function (io) {
         });       
         
         socket.on('send_reply', async (payload) => {   
-            nodeMailSender.sendMail(payload);                     
-            // io.emit("display_mail_task", {email:email, tasks:emailTasks});
+            nodeMailSender.sendMail(payload);                                 
         });        
+
+        socket.on('generate_mail_summary', async (emailDetailBody) => {   
+            await userService.generateMailSummary({emailBody: emailDetailBody}).then(response=>{                
+                io.emit("display_mail_summary", response.data);
+            }).catch(error=>{
+                console.log(error);
+            });                               
+        });                
     });
 
     subscriptionService.showError$.subscribe(

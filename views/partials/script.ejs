@@ -138,12 +138,20 @@
         }
     });
 
-    socket.on('display_reply_suggestion', (value) => {
+    socket.on('display_reply_suggestion', (value) => {        
+        const replyMailModalLabel = document.getElementById("replyMailModalLabel");        
+        replyMailModalLabel.innerHTML = "Reply Suggestion";
+
         const emailBodyText = document.getElementById("emailBodyText");        
         emailBodyText.value = value;
 
         const emailDetailFrom = document.getElementById("emailDetailFrom");
         const emailReplyTo = document.getElementById("emailReplyTo");
         emailReplyTo.value = emailDetailFrom.innerHTML.split(":- ")[1];
+    });    
+
+    socket.on('display_mail_summary', (value) => {      
+        const mailSummarySection = document.getElementById("mailSummarySection");        
+        mailSummarySection.innerHTML = value;        
     });    
 </script>
