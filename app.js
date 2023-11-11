@@ -37,6 +37,8 @@ app.use((req, res, next) => {
     res.locals.warnings = req.flash("warning");
     res.locals.infos = req.flash("info");
     res.locals.successes = req.flash("success");
+    app.locals.userProfile = req.flash("userProfile");
+    console.log(app.locals.userProfile)
     next();
 });
 

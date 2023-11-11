@@ -6,13 +6,15 @@
         <title>Mail Whiz</title>
 </head>
 <style>
-    #homeSection{
+    #homeSection {
         display: none;
     }
-    #emailDetailsSection{
+
+    #emailDetailsSection {
         display: none;
     }
 </style>
+
 <body>
     <%- include('../partials/navbar'); %>
         <!-- Page Content -->
@@ -28,14 +30,24 @@
 
                     <div id="emailDetailsSection">
                         <%- include('../components/emailDetails'); %>
-                    </div>                
+                    </div>
                 </div>
             </div>
         </div>
 </body>
-<script>
-    window.onload = function () {
-        $("#homeSection").slideDown("slow");
-    }    
-</script>
+<%- include('../partials/script'); %>
+    <script>
+        window.onload = function () {
+            $("#homeSection").slideDown("slow");
+            // return
+            const inboxMails = document.getElementById("inboxMails");
+            const taskList = document.getElementById("taskList");
+
+            inboxMails.innerText = "Loading mails ...";
+            taskList.innerText = "Loading tasks ...";
+
+            socket.emit("fetch_mails");
+        }    
+    </script>
+
 </html>

@@ -94,18 +94,3 @@
     </div>
   </div>
 </body>
-
-<%- include('../partials/script'); %>
-
-  <script>
-    window.onload = function () {
-      // return
-      const inboxMails = document.getElementById("inboxMails");
-      const taskList = document.getElementById("taskList");
-
-      inboxMails.innerText = "Loading mails ...";
-      taskList.innerText = "Loading tasks ...";
-
-      socket.emit("fetch_mails", "home");
-    };
-  </script>

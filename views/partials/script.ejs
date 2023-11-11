@@ -5,7 +5,7 @@
     crossorigin="anonymous"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-    const socket = io();
+    socket = io();
 
     socket.on('mail_box_total', (value) => {
         const item = document.getElementById("totalEmails");
@@ -35,7 +35,7 @@
         }
     });
 
-    socket.on('display_mails_tasks', (value) => {        
+    socket.on('display_mails_tasks', (value) => {
         const inboxMails = document.getElementById("inboxMails");
         const taskList = document.getElementById("taskList");
 
@@ -44,13 +44,13 @@
 
         if (value?.emails?.length > 0) {
             const unReadEmails = document.getElementById("unReadEmails");
-            unReadEmails.innerHTML = value.emails.filter(x=>x.read==false).length;            
+            unReadEmails.innerHTML = value.emails.filter(x => x.read == false).length;
 
             const processedMails = document.getElementById("processedMails");
             processedMails.innerHTML = value.emails.length;
 
             for (let email of value?.emails) {
-                const card = `<button class="cardX">
+                const card = `<div class="cardX" onclick="goToEmailDetailsSection('${email.id}')">
                                 <div class="mailAvatar bg-info">
                                     <span class="text">${email.initials}</span>
                                 </div>
@@ -59,7 +59,7 @@
                                     <p class="subject">${email.subject}</p>
                                     <p class="from">From: ${email.from_email}</p>
                                 </div>
-                            </button>`
+                            </div>`
                 inboxMails.innerHTML += card
             }
         }
@@ -67,18 +67,18 @@
             inboxMails.innerText = "No have no mails which have been processed";
         }
 
-        
+
         const progressBar = document.getElementById("progressBar");
-        
+
         if (value?.tasks?.length == 0) {
             taskList.innerText = "You have no pending tasks";
             progressBar.style.width = "0%"
         }
         else {
             const totalTasks = value.tasks.length;
-            const doneTasks = value.tasks.filter(x=>x.done==true).length;
+            const doneTasks = value.tasks.filter(x => x.done == true).length;
 
-            progressBar.style.width = `${Math.floor((doneTasks/totalTasks)*100)}%`;
+            progressBar.style.width = `${Math.floor((doneTasks / totalTasks) * 100)}%`;
 
             for (let task of value?.tasks) {
                 let badge = null;
@@ -86,7 +86,7 @@
                 if (task.category.toLowerCase() == "urgent") {
                     badge = `<span class="badge rounded-pill bg-red">${task.category}</span>`
                 }
-                else if (task.category.toLowerCase() == "deadline") {                    
+                else if (task.category.toLowerCase() == "deadline") {
                     badge = `<span class="badge rounded-pill bg-danger">${task.category}</span>`
                 }
                 else if (task.category.toLowerCase() == "critical") {
@@ -102,14 +102,34 @@
                 const card = `<div class="taskCard bg-light">
                 <div class="form-check">
                   <p class="timeAgo">${task.timeAgo}</p>
-                  <input class="form-check-input bg-success}" type="checkbox" id="flexCheckDefault" ${(task.done==true?'checked':'')}>                
+                  <input class="form-check-input bg-success}" type="checkbox" id="flexCheckDefault" ${(task.done == true ? 'checked' : '')}>                
                   <label class="form-check-label">
                     ${badge} ${task.title}
                   </label>
                 </div>                
               </div>`
-              taskList.innerHTML += card
+                taskList.innerHTML += card
             }
         }
     });
+
+    socket.on('display_mail_task', (value) => {
+        const emailDetailTitle = document.getElementById("emailDetailTitle");        
+        emailDetailTitle.innerHTML = value.email.subject;
+
+        const emailDetailFrom = document.getElementById("emailDetailFrom");        
+        emailDetailFrom.innerHTML = value.email.from_email;
+
+        const emailDetailBody = document.getElementById("emailDetailBody");        
+        emailDetailBody.innerHTML = value.email.body;
+
+        const emailDetailTasks = document.getElementById("emailDetailTasks");        
+        emailDetailTasks.innerHTML = null;
+
+        for (let task of value?.tasks) {
+            const li = `<li>${task.category} - ${task.title}</li>`;
+            emailDetailTasks.innerHTML += li;
+        }
+    });
+
 </script>

@@ -7,37 +7,38 @@ module.exports = function (io) {
         let emails = []
         let tasks = [];
 
-        socket.on('fetch_mails', async (page) => {
-            if (page == "home") {
-                await userService.fetchProcessedEmails().then(response => {
-                    emails = response.data.emails;
-                    tasks = response.data.tasks;
+        socket.on('fetch_mails', async () => {                        
+            await userService.fetchProcessedEmails().then(response => {
+                emails = response.data.emails;
+                tasks = response.data.tasks;
 
-                    for (let email of emails) {
-                        const timeAgo = moment(new Date(email.created_at)).fromNow()
-                        email["timeAgo"] = timeAgo;
+                for (let email of emails) {
+                    const timeAgo = moment(new Date(email.created_at)).fromNow()
+                    email["timeAgo"] = timeAgo;
 
-                        let namesList = email.from_email.split(" ");
-                        if (namesList.length > 1) {
-                            email["initials"] = `${namesList[0][0]}${namesList[1][0]}`.toUpperCase();
-                        }
-                        else {
-                            email["initials"] = `${namesList[0][0]}`.toUpperCase();
-                        }
+                    let namesList = email.from_email.split(" ");
+                    if (namesList.length > 1) {
+                        email["initials"] = `${namesList[0][0]}${namesList[1][0]}`.toUpperCase();
                     }
-
-                    for (let task of tasks) {
-                        const timeAgo = moment(new Date(task.created_at)).fromNow()
-                        task["timeAgo"] = timeAgo;
+                    else {
+                        email["initials"] = `${namesList[0][0]}`.toUpperCase();
                     }
-                    io.emit("display_mails_tasks", {emails:emails, tasks:tasks});
-                }).catch(error => {
-                    console.log(error)
-                });
-            }
-            else{
+                }
+
+                for (let task of tasks) {
+                    const timeAgo = moment(new Date(task.created_at)).fromNow()
+                    task["timeAgo"] = timeAgo;
+                }
                 io.emit("display_mails_tasks", {emails:emails, tasks:tasks});
-            }
+            }).catch(error => {
+                console.log(error)
+            });            
+        });
+
+        socket.on('get_mail', async (emailId) => {            
+            const email = emails.find(x=>x?.id == emailId);
+            const emailTasks = tasks.filter(x=>x?.email_id == emailId);
+            io.emit("display_mail_task", {email:email, tasks:emailTasks});
         });
     });
 

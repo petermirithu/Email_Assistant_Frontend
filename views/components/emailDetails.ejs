@@ -37,70 +37,60 @@
 </style>
 
 <body>
-    <h1 class="display-4 welcomeTxt">Weekly Meeting</h1>
-    <p class="lead">From:- Johnson<johnson.kimany@gmail.com></p>
+    <h1 class="display-4 welcomeTxt" id="emailDetailTitle">Loading Title...</h1>
+    <p class="lead" id="emailDetailFrom">From:- Loading ...</p>
 
     <div class="row">
         <div class="col-md-7">
-            <div class="card emailBody bg-light">
-                Dear Madam Susan,
-
-                I hope this email finds you well. I am writing to request a meeting to discuss
-                Project
-                X, specifically addressing the budget allocation of the project. Given the critical
-                nature of this project and the need for timely decision-making, I believe it's
-                important
-                for us to come together and align on our strategies and next steps.
-
-                Proposed Meeting Details:
-
-                - Date: 26th October 2023
-                - Time: 10:00am
-                - Duration: 1 hour
-                - Location: XCode Insurance
-
-                If there are specific points or materials you would like to include in the agenda,
-                please feel free to share them with me, and I will incorporate them accordingly.
-
-                Thank you for your attention to this matter, and I look forward to our productive
-                discussion.
-
-                Best regards,
-
-                Mr Johson Kimany
-                MD - XCode Insurance
+            <div id="emailDetailBody" class="card emailBody bg-light">
+                <p>Loading Email Body ...</p>
             </div>
         </div>
         <div class="col-md-5">
             <div class="card bg-light taskCard">
-                <h5 class="title">Tasks / Key Points</h5>
-                <ul>
-                    <li>Review the Proposed Meeting Details</li>
-                    <li>Confirm Your Availability</li>
-                    <li>Provide Agenda Input (if applicable)</li>
+                <h5 class="title">Tasks / Key Points</h5>                
+                <ul id="emailDetailTasks">
+                    <li>Loading ...</li>                    
                 </ul>
             </div>
 
             <div class="card bg-light btnCard">
                 <h5 class="title">How can I help you with this Email?</h5>
-                <button type="button" class="btn btn-outline-secondary">Generate reply
-                    suggestion</button>
+                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                    data-bs-target="#replyMailModal">Generate reply suggestion</button>
                 <button type="button" class="btn btn-outline-info">Manually reply to email</button>
                 <button type="button" class="btn btn-outline-light">Get Summary</button>
                 <button type="button" class="btn btn-outline-dark">Mark as Read</button>
             </div>
         </div>
     </div>
+
+
+    <!-- Email Reply Modal -->   
+    <div class="modal fade modal-centered modal-scrollable" id="replyMailModal" tabindex="-1" aria-labelledby="replyMailModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="replyMailModalLabel">Reply Suggestion</h5>                    
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                    <p>Modal body text goes here.</p>
+                    <p>Modal body text goes here.</p>
+                    <p>Modal body text goes here.</p>
+                    <p>Modal body text goes here.</p>
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Send Reply</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
-<%- include('../partials/script'); %>
-
-    <script>
-        window.onload = function () {
-            return
-            const inboxMails = document.getElementById("inboxMails");
-
-            inboxMails.innerText = "Loading mails ...";
-
-            socket.emit("fetch_mails", "emailDeatils");
-        };
-    </script>

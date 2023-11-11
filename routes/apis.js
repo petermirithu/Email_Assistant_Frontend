@@ -65,13 +65,14 @@ router.post('/sign_in_user', async function (req, res, next) {
     }
 
     if (warning != null) {
-        req.flash('warning', warning)
-        res.redirect('/signIn')
+        req.flash('warning', warning);
+        res.redirect('/signIn');
     } else {        
         await userService.loginUser(payload).then(
-            async response => {                
+            async response => {                          
                 await cacheService.setUserData(response.data)                            
                 emailService.startEmailTracking(payload.email, payload.password)
+                req.flash('userProfile', response.data);
                 res.redirect('/')
             }).catch(err => {                
                 if (err?.response?.data == "invalidCredentials") {

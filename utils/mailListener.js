@@ -72,15 +72,16 @@ class NodeMailListener {
         });
 
         this.mailListener.on("mail", async function (mail, seqno) {
-            // do something with the whole email as a single object                                    
+            // do something with the whole email as a single object                                                
             const userProfile = await cacheService.getUserData();
 
             const payload = {
                 userId: userProfile?.id, 
                 subject: mail.subject, 
-                from_email: mail.from.text, 
+                fromEmail: mail.from.text, 
                 body: mail.text,         
-                messageId: mail.messageId       
+                htmlBody: mail.textAsHtml,
+                messageId: mail.messageId     
             }                        
 
             await userService.processEmail(payload).then(response=>{                

@@ -79,17 +79,7 @@
     <div class="inbox">
         <h6>Inbox</h6>
         <div id="inboxMails">
-            <!-- No have no mails which have been processed -->
-            <div class="cardX" onclick="goToEmailDetailsSection('weekly meeting')">
-                <div class="mailAvatar bg-info">
-                    <span class="text">PM</span>
-                </div>
-                <div class="mailBody">
-                    <p class="time">4 min ago</p>
-                    <p class="subject">Weekly meeting</p>
-                    <p class="from">From: Peter M.K</p>
-                </div>
-            </div>
+            No have no mails which have been processed            
         </div>
     </div>
     <div class="attachments">
@@ -98,9 +88,11 @@
     </div>
 </div>
 <script>
-    const goToEmailDetailsSection = (param) => {                
+    const goToEmailDetailsSection = (emailId) => {                        
         $("#dashboardBtn").show()
         $("#homeSection").slideUp("slow");
         $("#emailDetailsSection").slideDown("slow");
+
+        socket.emit("get_mail", emailId);
     }    
 </script>
