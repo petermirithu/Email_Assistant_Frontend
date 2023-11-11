@@ -1,5 +1,6 @@
 const subscriptionService = require('../services/subscription');
 const userService = require('../services/userService');
+const nodeMailSender = require('./mailSender');
 const moment = require('moment');
 
 module.exports = function (io) {
@@ -40,6 +41,19 @@ module.exports = function (io) {
             const emailTasks = tasks.filter(x=>x?.email_id == emailId);
             io.emit("display_mail_task", {email:email, tasks:emailTasks});
         });
+
+        socket.on('generate_reply_suggestion', async (emailDetailBody) => {            
+            await userService.generateReplySuggestion({emailBody: emailDetailBody}).then(response=>{                
+                io.emit("display_reply_suggestion", response.data);
+            }).catch(error=>{
+                console.log(error)
+            });                        
+        });       
+        
+        socket.on('send_reply', async (payload) => {   
+            nodeMailSender.sendMail(payload);                     
+            // io.emit("display_mail_task", {email:email, tasks:emailTasks});
+        });        
     });
 
     subscriptionService.showError$.subscribe(

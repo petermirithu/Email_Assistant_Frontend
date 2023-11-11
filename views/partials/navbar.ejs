@@ -47,9 +47,9 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade modal-centered" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel"
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel"
       aria-hidden="true">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="profileModalLabel">Profile</h5>
@@ -57,11 +57,13 @@
               <span aria-hidden="true"></span>
             </button>
           </div>
-          <div class="modal-body card" style="margin: 20px;background-color: white;">            
-            <p><b>First Name:-</b> <%= userProfile[0]?.first_name %></p>
-            <p><b>Last Name:-</b> <%= userProfile[0]?.last_name %></p>
-            <p><b>Email:-</b> <%= userProfile[0]?.email %></p>
-            <p><b>Created_at:-</b> <%= userProfile[0]?.created_at %></p>            
+          <div class="modal-body">            
+            <div class="card" style="background-color: white; padding: 10px;">
+              <p><b>First Name:-</b> <%= userProfile[0]?.first_name %></p>
+              <p><b>Last Name:-</b> <%= userProfile[0]?.last_name %></p>
+              <p><b>Email:-</b> <%= userProfile[0]?.email %></p>
+              <p><b>Created_at:-</b> <%= userProfile[0]?.created_at %></p>            
+            </div>
           </div>
           <div class="modal-footer">            
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

@@ -114,17 +114,23 @@
     });
 
     socket.on('display_mail_task', (value) => {
+        const emailDetailId = document.getElementById("emailDetailId");        
+        emailDetailId.innerHTML = value.email.id;
+
+        const emailDetailMessageId = document.getElementById("emailDetailMessageId");        
+        emailDetailMessageId.innerHTML = value.email.message_id;        
+
         const emailDetailTitle = document.getElementById("emailDetailTitle");        
         emailDetailTitle.innerHTML = value.email.subject;
 
         const emailDetailFrom = document.getElementById("emailDetailFrom");        
-        emailDetailFrom.innerHTML = value.email.from_email;
+        emailDetailFrom.innerHTML = value.email.from_email.replace("<",":- ").replace(">","");
 
         const emailDetailBody = document.getElementById("emailDetailBody");        
         emailDetailBody.innerHTML = value.email.body;
 
         const emailDetailTasks = document.getElementById("emailDetailTasks");        
-        emailDetailTasks.innerHTML = null;
+        emailDetailTasks.innerHTML = null;        
 
         for (let task of value?.tasks) {
             const li = `<li>${task.category} - ${task.title}</li>`;
@@ -132,4 +138,12 @@
         }
     });
 
+    socket.on('display_reply_suggestion', (value) => {
+        const emailBodyText = document.getElementById("emailBodyText");        
+        emailBodyText.value = value;
+
+        const emailDetailFrom = document.getElementById("emailDetailFrom");
+        const emailReplyTo = document.getElementById("emailReplyTo");
+        emailReplyTo.value = emailDetailFrom.innerHTML.split(":- ")[1];
+    });    
 </script>

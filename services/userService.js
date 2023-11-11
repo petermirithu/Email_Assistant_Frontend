@@ -32,6 +32,10 @@ class UserService {
         const userData = await cacheService.getUserData()                            
         return Axios.get("/fetch_processed_emails/"+userData.id);
     }
+
+    generateReplySuggestion = async (payload) => {                                
+        return Axios.post("/generate_reply_suggestion", payload);
+    }
 }
 
 const userService = new UserService();

@@ -32,6 +32,7 @@
     "mail-listener5": "^2.1.2",
     "moment": "^2.29.4",
     "node-localstorage": "^3.0.5",
+    "nodemailer": "^6.9.7",
     "rxjs": "^7.8.1",
     "socket.io": "^4.7.2"
   }
