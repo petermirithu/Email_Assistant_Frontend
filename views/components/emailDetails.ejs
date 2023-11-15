@@ -59,6 +59,7 @@
             <div id="emailDetailBody" class="card emailBody bg-light">
                 <p>Loading Email Body ...</p>
             </div>
+            <div id="emailAttachmentBtn" style="margin-bottom: 10px;"></div>
         </div>
         <div class="col-md-5">
             <div class="card bg-light taskCard">
@@ -66,14 +67,14 @@
                 <ul id="emailDetailTasks">
                     <li>Loading ...</li>
                 </ul>
-            </div>
+            </div>            
 
             <div class="card bg-light btnCard">
                 <h5 class="title">How can I help you with this Email?</h5>
                 <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
-                    data-bs-target="#replyMailModal" onclick="getReplySuggestion()">Generate reply suggestion</button>
+                    data-bs-target="#replyMailModal" onclick="getEmailReplySuggestion()">Generate reply suggestion</button>
                 <button type="button" class="btn btn-outline-info" data-bs-toggle="modal"
-                    data-bs-target="#replyMailModal" onclick="openReplyManualy()">Manually reply to email</button>
+                    data-bs-target="#replyMailModal" onclick="openEmailReplyManualy()">Manually reply to email</button>
                 <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
                     data-bs-target="#summaryMailModal" onclick="generateEmailSummary()">Get Summary</button>
                 <button type="button" class="btn btn-outline-dark">Mark as Read</button>
@@ -141,19 +142,19 @@
         socket.emit("generate_mail_summary", emailDetailBody);
     }
 
-    const openReplyManualy = () => {
-        const replyMailModalLabel = document.getElementById("replyMailModalLabel");
-        replyMailModalLabel.innerHTML = "Reply Manually";
-
-        const emailBodyText = document.getElementById("emailBodyText");
-        emailBodyText.value = null;
+    const openEmailReplyManualy = () => {
+        document.getElementById("replyMailModalLabel").innerHTML = "Reply Manually";
+        document.getElementById("emailBodyText").value = null;
 
         const emailDetailFrom = document.getElementById("emailDetailFrom");
         const emailReplyTo = document.getElementById("emailReplyTo");
         emailReplyTo.value = emailDetailFrom.innerHTML.split(":- ")[1];
     }
 
-    const getReplySuggestion = () => {
+    const getEmailReplySuggestion = () => {        
+        document.getElementById("emailReplyTo").value = "Loading ..."
+        document.getElementById("emailBodyText").value = "Generating email reply suggestion ....\nPlease wait!";
+        
         const emailDetailBody = document.getElementById("emailDetailBody").innerHTML;
         socket.emit("generate_reply_suggestion", emailDetailBody);
     }

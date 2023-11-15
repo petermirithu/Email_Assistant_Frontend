@@ -5,12 +5,8 @@
     <%- include('../partials/head'); %>
         <title>Mail Whiz</title>
 </head>
-<style>
-    #homeSection {
-        display: none;
-    }
-
-    #emailDetailsSection {
+<style>    
+    #homeSection, #attachmentDetailsSection, #emailDetailsSection {
         display: none;
     }
 </style>
@@ -31,23 +27,24 @@
                     <div id="emailDetailsSection">
                         <%- include('../components/emailDetails'); %>
                     </div>
+
+                    <div id="attachmentDetailsSection">
+                        <%- include('../components/attachmentDetails'); %>
+                    </div>
                 </div>
             </div>
         </div>
 </body>
 <%- include('../partials/script'); %>
     <script>
-        window.onload = function () {
-            $("#homeSection").slideDown("slow");
-            // return
-            const inboxMails = document.getElementById("inboxMails");
-            const taskList = document.getElementById("taskList");
+        window.onload = function () {             
+            $("#homeSection").slideDown("slow");            
 
-            inboxMails.innerText = "Loading mails ...";
-            taskList.innerText = "Loading tasks ...";
+            document.getElementById("inboxMails").innerText = "Loading mails ...";
+            document.getElementById("taskList").innerText = "Loading tasks ...";
+            document.getElementById("inboxAttachments").innerText = "Loading attachments ...";
 
             socket.emit("fetch_mails");
         }    
     </script>
-
 </html>

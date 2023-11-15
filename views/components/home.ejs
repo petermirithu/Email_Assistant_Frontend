@@ -33,6 +33,7 @@
     padding: 10px;
     border-radius: 10px;
     margin-bottom: 10px;
+    width: 100%;
   }
 
   .timeAgo {
@@ -47,6 +48,13 @@
     height: 25px;
     margin-right: 10px;
     cursor: pointer;
+  }
+
+  .form-check-label{
+    width: 85%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   #unReadEmails,
@@ -67,7 +75,7 @@
       <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
         role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
-    <div id="taskList" style="text-align: center; margin-top: 10px;">
+    <div id="taskList" style="text-align: center; margin-top: 10px; overflow-y: auto !important;">
       You have no pending tasks
     </div>
   </div>

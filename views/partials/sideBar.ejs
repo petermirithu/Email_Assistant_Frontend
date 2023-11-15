@@ -73,26 +73,49 @@
         font-size: small;
         margin: 0px !important;
     }
+
+    .attachments .cardX{
+        background-color: #d9e3f1 !important;
+        margin-bottom: 10px;
+    }
 </style>
 
 <div class="sideBar bg-light" data-bs-theme="light">    
     <div class="inbox">
         <h6>Inbox</h6>
         <div id="inboxMails">
-            No have no mails which have been processed            
+            No emails have been processed
         </div>
     </div>
     <div class="attachments">
         <h6>Attachments</h6>
-        <p>No un-read attachments</p>
+        <div id="inboxAttachments">
+            No attachments processed
+        </div>
     </div>
 </div>
 <script>
     const goToEmailDetailsSection = (emailId) => {                        
-        $("#dashboardBtn").show()
+        $("#dashboardBtn").show()            
+
         $("#homeSection").slideUp("slow");
+        $("#attachmentDetailsSection").slideUp("slow");
         $("#emailDetailsSection").slideDown("slow");
+
+        if(emailId?.length==0){
+            emailId=document.getElementById("attachmentDetailEmailId").innerHTML;                       
+        }
 
         socket.emit("get_mail", emailId);
     }    
+
+    const goToEmailAttachmentSection = (attachmentId) => {          
+        $("#dashboardBtn").show()            
+
+        $("#emailDetailsSection").slideUp("slow");
+        $("#homeSection").slideUp("slow");
+        $("#attachmentDetailsSection").slideDown("slow");
+        
+        socket.emit("get_attachment", attachmentId);
+    }
 </script>

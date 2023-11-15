@@ -1,0 +1,132 @@
+<style>
+    body {
+        overflow: hidden;
+    }
+
+    .content {
+        padding: 30px;
+        height: 95vh;
+        overflow: auto !important;
+    }
+
+    .emailBody {
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+
+    .taskCard {
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+
+    .title {
+        font-weight: bold;
+    }
+
+    .btnCard {
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+
+    .btnCard .btn {
+        margin-bottom: 10px;
+    }
+</style>
+
+<body>
+    <div id="successToast"
+        class="toast align-items-center text-bg-success border-0 position-absolute top-0 start-50 translate-middle-x"
+        role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                Successfully sent your message reply
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                aria-label="Close"></button>
+        </div>
+    </div>
+
+    <h1 class="display-4 welcomeTxt" id="attachmentDetailTitle">Loading Title...</h1>
+    <p class="lead" id="attachmentDetailFrom">From:- Loading ...</p>
+    <p id="attachmentDetailId" style="display: none;"></p>
+    <p id="attachmentDetailEmailId" style="display: none;"></p>
+
+    <div class="row">
+        <div class="col-md-7">            
+            <div id="my_pdf_viewer">
+                <div id="canvas_container">
+                    <canvas id="pdf_renderer"></canvas>
+                </div>                
+            </div>
+
+            <div style="margin-bottom: 10px;">
+                <p><i>This attachment is linked to an email.</i></p>
+                <button type="button" class="btn btn-outline-warning" onclick="goToEmailDetailsSection('')">Open Email</button>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="card bg-light taskCard">
+                <h5 class="title">Tasks / Key Points</h5>
+                <ul id="attachmentDetailTasks">
+                    <li>Loading ...</li>
+                </ul>
+            </div>
+
+            <div class="card bg-light btnCard">
+                <h5 class="title">How can I help you with this Email?</h5>
+                <button type="button" class="btn btn-outline-info" data-bs-toggle="modal"
+                    data-bs-target="#attachmentAIReponseModal" onclick="getAttachmentReplySuggestion()">Generate reply
+                    suggestion</button>
+                <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
+                    data-bs-target="#attachmentAIReponseModal" onclick="generateAttachmentSummary()">Get Summary</button>
+                <button type="button" class="btn btn-outline-dark">Mark as Read</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Summary and Reply Suggetsion Modal -->
+    <div class="modal fade" id="attachmentAIReponseModal" tabindex="-1" aria-labelledby="attachmentAIReponseModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="attachmentAIReponseModalLabel">Reply Suggestion for the PDF</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card" id="attachmentAIReponseSection" style="background-color: white; padding: 10px;">
+                        <p>Generating ...</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>    
+</body>
+
+<!-- <script>
+   
+</script> -->
+
+<script>
+    const generateAttachmentSummary = () => {        
+        document.getElementById("attachmentAIReponseSection").innerHTML = "Generating attachment summary ...";
+
+        const fileName = document.getElementById("attachmentDetailTitle").innerHTML;
+        socket.emit("generate_attachment_summary", fileName);        
+    }
+
+    const getAttachmentReplySuggestion = () => {   
+        document.getElementById("attachmentAIReponseSection").innerHTML = "Generating reply suggestion ...";
+        
+        const fileName = document.getElementById("attachmentDetailTitle").innerHTML;
+        socket.emit("generate_attachment_reply_suggestion", fileName);                   
+    }    
+</script>

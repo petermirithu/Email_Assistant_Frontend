@@ -38,16 +38,19 @@
     socket.on('display_mails_tasks', (value) => {
         const inboxMails = document.getElementById("inboxMails");
         const taskList = document.getElementById("taskList");
+        const inboxAttachments = document.getElementById("inboxAttachments");
 
         inboxMails.innerHTML = null;
         taskList.innerHTML = null;
+        inboxAttachments.innerHTML = null;
 
+        /**
+         * *********** This is the Inbox mail Section
+         */
         if (value?.emails?.length > 0) {
-            const unReadEmails = document.getElementById("unReadEmails");
-            unReadEmails.innerHTML = value.emails.filter(x => x.read == false).length;
+            document.getElementById("unReadEmails").innerHTML = value.emails.filter(x => x.read == false).length;
 
-            const processedMails = document.getElementById("processedMails");
-            processedMails.innerHTML = value.emails.length;
+            document.getElementById("processedMails").innerHTML = value.emails.length;
 
             for (let email of value?.emails) {
                 const card = `<div class="cardX" onclick="goToEmailDetailsSection('${email.id}')">
@@ -64,9 +67,13 @@
             }
         }
         else {
-            inboxMails.innerText = "No have no mails which have been processed";
+            inboxMails.innerText = "No emails have been processed";
         }
 
+
+        /**
+         * *********** This is the Tasks Section
+         */
 
         const progressBar = document.getElementById("progressBar");
 
@@ -111,47 +118,139 @@
                 taskList.innerHTML += card
             }
         }
-    });
 
-    socket.on('display_mail_task', (value) => {
-        const emailDetailId = document.getElementById("emailDetailId");        
-        emailDetailId.innerHTML = value.email.id;
-
-        const emailDetailMessageId = document.getElementById("emailDetailMessageId");        
-        emailDetailMessageId.innerHTML = value.email.message_id;        
-
-        const emailDetailTitle = document.getElementById("emailDetailTitle");        
-        emailDetailTitle.innerHTML = value.email.subject;
-
-        const emailDetailFrom = document.getElementById("emailDetailFrom");        
-        emailDetailFrom.innerHTML = value.email.from_email.replace("<",":- ").replace(">","");
-
-        const emailDetailBody = document.getElementById("emailDetailBody");        
-        emailDetailBody.innerHTML = value.email.body;
-
-        const emailDetailTasks = document.getElementById("emailDetailTasks");        
-        emailDetailTasks.innerHTML = null;        
-
-        for (let task of value?.tasks) {
-            const li = `<li>${task.category} - ${task.title}</li>`;
-            emailDetailTasks.innerHTML += li;
+        /**
+         * *********** This is the Attachment Section
+         */
+        if (value?.attachments?.length > 0) {
+            for (let attachment of value?.attachments) {
+                const card = `<div class="cardX" onclick="goToEmailAttachmentSection('${attachment.id}')">                                
+                                <div class="mailBody">                                    
+                                    <p class="subject">${attachment.name}</p>                                    
+                                </div>
+                            </div>`
+                inboxAttachments.innerHTML += card
+            }
+        }
+        else {
+            inboxAttachments.innerText = "No attachments have been processed";
         }
     });
 
-    socket.on('display_reply_suggestion', (value) => {        
-        const replyMailModalLabel = document.getElementById("replyMailModalLabel");        
-        replyMailModalLabel.innerHTML = "Reply Suggestion";
+    socket.on('display_mail_task', (value) => {
+        document.getElementById("emailDetailId").innerHTML = value.email.id;
 
-        const emailBodyText = document.getElementById("emailBodyText");        
-        emailBodyText.value = value;
+        document.getElementById("emailDetailMessageId").innerHTML = value.email.message_id;
+
+        document.getElementById("emailDetailTitle").innerHTML = value.email.subject;
+
+        document.getElementById("emailDetailFrom").innerHTML = value.email.from_email.replace("<", ":- ").replace(">", "");
+
+        document.getElementById("emailDetailBody").innerHTML = value.email.body;
+
+        const emailDetailTasks = document.getElementById("emailDetailTasks");
+        emailDetailTasks.innerHTML = null;
+
+        if (value?.tasks?.length>0){
+            for (let task of value?.tasks) {
+                const li = `<li>${task.category} - ${task.title}</li>`;
+                emailDetailTasks.innerHTML += li;
+            }
+        }
+        else{
+            emailDetailTasks.innerHTML = "<li>No tasks/key points were generated</li>"
+        }
+
+
+
+        const emailAttachmentBtn = document.getElementById("emailAttachmentBtn");
+
+        if (value.attachments?.length > 0) {
+            emailAttachmentBtn.innerHTML = `<p><i>This email has an Attachment.</i></p>
+            <button type="button" class="btn btn-outline-warning" onclick="goToEmailAttachmentSection('${value.attachments[0].id}')">Open Attachment</button>`
+        }
+        else {
+            emailAttachmentBtn.innerHTML = null;
+        }
+    });
+
+    socket.on('display_reply_suggestion', (value) => {
+        document.getElementById("replyMailModalLabel").innerHTML = "Reply Suggestion";
+
+        document.getElementById("emailBodyText").value = value;
 
         const emailDetailFrom = document.getElementById("emailDetailFrom");
-        const emailReplyTo = document.getElementById("emailReplyTo");
-        emailReplyTo.value = emailDetailFrom.innerHTML.split(":- ")[1];
-    });    
+        document.getElementById("emailReplyTo").value = emailDetailFrom.innerHTML.split(":- ")[1];
+    });
 
-    socket.on('display_mail_summary', (value) => {      
-        const mailSummarySection = document.getElementById("mailSummarySection");        
-        mailSummarySection.innerHTML = value;        
+    socket.on('display_mail_summary', (value) => {
+        document.getElementById("mailSummarySection").innerHTML = value;
+    });
+
+    socket.on('mail_processed', (value) => {
+        socket.emit("fetch_mails");
+    });
+
+    socket.on('display_attachment_task', (value) => {
+        document.getElementById("attachmentDetailId").innerHTML = value.attachment.id;
+
+        document.getElementById("attachmentDetailEmailId").innerHTML = value.email.id;
+
+        document.getElementById("attachmentDetailTitle").innerHTML = value.attachment.name;
+
+        document.getElementById("attachmentDetailFrom").innerHTML = value.email.from_email.replace("<", ":- ").replace(">", "");
+
+        const attachmentDetailTasks = document.getElementById("attachmentDetailTasks");
+        attachmentDetailTasks.innerHTML = null;
+
+        if (value?.tasks?.length>0){
+            for (let task of value?.tasks) {
+                const li = `<li>${task.category} - ${task.title}</li>`;
+                attachmentDetailTasks.innerHTML += li;
+            }
+        }
+        else{
+            attachmentDetailTasks.innerHTML = "<li>No tasks/key points were generated</li>"
+        }
+
+        var myState = {
+            pdf: null,
+            currentPage: 1,
+            zoom: 0.85
+
+        }
+
+        pdfjsLib.getDocument(`attachments/${value.attachment.name}`).then((pdf) => {
+            myState.pdf = pdf;
+            render();
+        });
+
+        function render() {
+            myState.pdf.getPage(myState.currentPage).then((page) => {
+
+                var canvas = document.getElementById("pdf_renderer");
+                var ctx = canvas.getContext('2d');
+
+                var viewport = page.getViewport(myState.zoom);
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+
+                page.render({
+                    canvasContext: ctx,
+                    viewport: viewport
+                });
+            });
+        }
+    });
+
+    socket.on('display_attachment_summary_reply', (value) => {        
+        const attachmentAIReponseModalLabel = document.getElementById("attachmentAIReponseModalLabel");
+        if(value.option=="reply"){
+            attachmentAIReponseModalLabel.innerHTML="Attachment Reply Suggestion";
+        }
+        else{
+            attachmentAIReponseModalLabel.innerHTML="Attachment Summary";
+        }
+        document.getElementById("attachmentAIReponseSection").innerHTML = value.text;
     });    
 </script>
