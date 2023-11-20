@@ -81,8 +81,8 @@
                     data-bs-target="#attachmentAIReponseModal" onclick="getAttachmentReplySuggestion()">Generate reply
                     suggestion</button>
                 <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
-                    data-bs-target="#attachmentAIReponseModal" onclick="generateAttachmentSummary()">Get Summary</button>
-                <button type="button" class="btn btn-outline-dark">Mark as Read</button>
+                    data-bs-target="#attachmentAIReponseModal" onclick="generateAttachmentSummary()">Get Summary</button>                
+                <button type="button" class="btn btn-outline-dark" onclick="markAttachmentAsRead()">Mark as Read / UnRead</button>
             </div>
         </div>
     </div>
@@ -116,6 +116,11 @@
 </script> -->
 
 <script>
+    const markAttachmentAsRead = () => {        
+        const attachmentDetailId = document.getElementById("attachmentDetailId").innerHTML;
+        socket.emit("mark_attachment_as_Read", attachmentDetailId);              
+    }
+
     const generateAttachmentSummary = () => {        
         document.getElementById("attachmentAIReponseSection").innerHTML = "Generating attachment summary ...";
 

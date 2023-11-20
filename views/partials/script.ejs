@@ -35,6 +35,11 @@
         }
     });
 
+    socket.on('display_task_completion_bar', (value) => {
+        const progressBar = document.getElementById("progressBar");
+        progressBar.style.width = `${value}%`;
+    })
+
     socket.on('display_mails_tasks', (value) => {
         const inboxMails = document.getElementById("inboxMails");
         const taskList = document.getElementById("taskList");
@@ -53,13 +58,13 @@
             document.getElementById("processedMails").innerHTML = value.emails.length;
 
             for (let email of value?.emails) {
-                const card = `<div class="cardX" onclick="goToEmailDetailsSection('${email.id}')">
+                const card = `<div class="cardX ${(email.read==false)?"badgeUnread":""}" onclick="goToEmailDetailsSection('${email.id}')">
                                 <div class="mailAvatar bg-info">
                                     <span class="text">${email.initials}</span>
                                 </div>
                                 <div class="mailBody">
                                     <p class="time">${email.timeAgo}</p>
-                                    <p class="subject">${email.subject}</p>
+                                    <p class="subject">${email.subject}</p>                                    
                                     <p class="from">From: ${email.from_email}</p>
                                 </div>
                             </div>`
@@ -79,7 +84,7 @@
 
         if (value?.tasks?.length == 0) {
             taskList.innerText = "You have no pending tasks";
-            progressBar.style.width = "0%"
+            progressBar.style.width = "0%";
         }
         else {
             const totalTasks = value.tasks.length;
@@ -109,13 +114,13 @@
                 const card = `<div class="taskCard bg-light">
                 <div class="form-check">
                   <p class="timeAgo">${task.timeAgo}</p>
-                  <input class="form-check-input bg-success}" type="checkbox" id="flexCheckDefault" ${(task.done == true ? 'checked' : '')}>                
+                  <input onclick="markTaskAsDone('${task.id}')" class="form-check-input" type="checkbox" id="flexCheckDefault" ${(task.done == true ? 'checked' : '')}>                
                   <label class="form-check-label">
                     ${badge} ${task.title}
                   </label>
                 </div>                
               </div>`
-                taskList.innerHTML += card
+                taskList.innerHTML += card;
             }
         }
 
@@ -124,7 +129,7 @@
          */
         if (value?.attachments?.length > 0) {
             for (let attachment of value?.attachments) {
-                const card = `<div class="cardX" onclick="goToEmailAttachmentSection('${attachment.id}')">                                
+                const card = `<div class="cardX ${(attachment.read==false)?"badgeUnread":""}" onclick="goToEmailAttachmentSection('${attachment.id}')">                                
                                 <div class="mailBody">                                    
                                     <p class="subject">${attachment.name}</p>                                    
                                 </div>
@@ -151,13 +156,13 @@
         const emailDetailTasks = document.getElementById("emailDetailTasks");
         emailDetailTasks.innerHTML = null;
 
-        if (value?.tasks?.length>0){
+        if (value?.tasks?.length > 0) {
             for (let task of value?.tasks) {
                 const li = `<li>${task.category} - ${task.title}</li>`;
                 emailDetailTasks.innerHTML += li;
             }
         }
-        else{
+        else {
             emailDetailTasks.innerHTML = "<li>No tasks/key points were generated</li>"
         }
 
@@ -203,13 +208,13 @@
         const attachmentDetailTasks = document.getElementById("attachmentDetailTasks");
         attachmentDetailTasks.innerHTML = null;
 
-        if (value?.tasks?.length>0){
+        if (value?.tasks?.length > 0) {
             for (let task of value?.tasks) {
                 const li = `<li>${task.category} - ${task.title}</li>`;
                 attachmentDetailTasks.innerHTML += li;
             }
         }
-        else{
+        else {
             attachmentDetailTasks.innerHTML = "<li>No tasks/key points were generated</li>"
         }
 
@@ -243,13 +248,13 @@
         }
     });
 
-    socket.on('display_attachment_summary_reply', (value) => {        
+    socket.on('display_attachment_summary_reply', (value) => {
         const attachmentAIReponseModalLabel = document.getElementById("attachmentAIReponseModalLabel");
-        if(value.option=="reply"){
-            attachmentAIReponseModalLabel.innerHTML="Attachment Reply Suggestion";
+        if (value.option == "reply") {
+            attachmentAIReponseModalLabel.innerHTML = "Attachment Reply Suggestion";
         }
-        else{
-            attachmentAIReponseModalLabel.innerHTML="Attachment Summary";
+        else {
+            attachmentAIReponseModalLabel.innerHTML = "Attachment Summary";
         }
         document.getElementById("attachmentAIReponseSection").innerHTML = value.text;
     });    

@@ -111,7 +111,57 @@ module.exports = function (io) {
             }).catch(error => {                
                 console.error(error);
             });            
-        });            
+        });  
+                
+        socket.on('mark_task_as_done', async (taskId) => {  
+            const taskIndex = tasks.findIndex(x=>x?.id == taskId);
+
+            tasks[taskIndex].done = !tasks[taskIndex].done;
+
+            const payload = {
+                taskId: taskId, 
+                taskStatus: tasks[taskIndex].done
+            }          
+            await userService.updateTaskStatus(payload).then(response => {
+                const doneTasks = tasks.filter(x => x.done == true).length;            
+                const percentage =  Math.floor((doneTasks / tasks.length) * 100)
+                io.emit("display_task_completion_bar", percentage);                
+            }).catch(error => {
+                console.log(error);
+            });
+        });
+
+        socket.on('mark_email_as_read', async (emailId) => {  
+            const emailIndex = emails.findIndex(x=>x?.id == emailId);
+            emails[emailIndex].read = !emails[emailIndex].read;
+
+            const payload = {
+                emailId: emailId, 
+                emailRead: emails[emailIndex].read
+            } 
+
+            await userService.updateEmailStatus(payload).then(response => {                
+                io.emit("display_mails_tasks", { emails: emails, tasks: tasks, attachments: attachments });                          
+            }).catch(error => {
+                console.log(error);
+            });
+        });
+
+        socket.on('mark_attachment_as_Read', async (attachmentId) => {  
+            const attachmentIndex = attachments.findIndex(x=>x?.id == attachmentId);
+            attachments[attachmentIndex].read = !attachments[attachmentIndex].read;
+
+            const payload = {
+                attachmentId: attachmentId, 
+                attachmentRead: attachments[attachmentIndex].read
+            } 
+
+            await userService.updateAttachmentStatus(payload).then(response => {                
+                io.emit("display_mails_tasks", { emails: emails, tasks: tasks, attachments: attachments });                         
+            }).catch(error => {
+                console.log(error);
+            });
+        });
     });
 
     subscriptionService.showError$.subscribe(

@@ -40,6 +40,18 @@ class UserService {
     generateMailSummary = async (payload) => {                                
         return Axios.post("/generate_mail_summary", payload);
     }
+
+    updateTaskStatus = async (payload) => {
+        return Axios.put("/update_task_status", payload);
+    }
+
+    updateEmailStatus = async (payload) => {
+        return Axios.put("/update_email_status", payload);
+    }
+
+    updateAttachmentStatus = async (payload) => {
+        return Axios.put("/update_attachment_status", payload);
+    }
 }
 
 const userService = new UserService();

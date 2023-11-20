@@ -102,3 +102,9 @@
     </div>
   </div>
 </body>
+
+<script>
+  const markTaskAsDone = (task_id) => {     
+    socket.emit("mark_task_as_done", task_id);
+  }
+</script>

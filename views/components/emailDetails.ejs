@@ -77,7 +77,7 @@
                     data-bs-target="#replyMailModal" onclick="openEmailReplyManualy()">Manually reply to email</button>
                 <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
                     data-bs-target="#summaryMailModal" onclick="generateEmailSummary()">Get Summary</button>
-                <button type="button" class="btn btn-outline-dark">Mark as Read</button>
+                <button type="button" class="btn btn-outline-dark" onclick="markEmailAsRead()">Mark as Read / UnRead</button>
             </div>
         </div>
     </div>
@@ -137,6 +137,11 @@
 
 </body>
 <script>
+    const markEmailAsRead = () => {        
+        const emailDetailId = document.getElementById("emailDetailId").innerHTML;
+        socket.emit("mark_email_as_read", emailDetailId);
+    }
+
     const generateEmailSummary = () => {
         const emailDetailBody = document.getElementById("emailDetailBody").innerHTML;
         socket.emit("generate_mail_summary", emailDetailBody);
