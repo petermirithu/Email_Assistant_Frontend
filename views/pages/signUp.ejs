@@ -36,22 +36,28 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="emailInput" class="form-label mt-4">Email address</label>
                                 <input name="email" required type="email" class="form-control rounded" id="emailInput"
-                                    aria-describedby="emailHelp" placeholder="Enter email">                                
+                                    aria-describedby="emailHelp" placeholder="Enter email">
                             </div>
 
                             <div style="float: right; margin-top: 4%;" data-bs-toggle="modal"
                                 data-bs-target="#emailPasswordModal">
-                                Info
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2" />
+                                </svg>
                             </div>
                             <div class="form-group">
                                 <label for="passwordInput" class="form-label mt-4">Password</label>
                                 <input name="password" required type="password" class="form-control rounded"
-                                    id="passwordInput" placeholder="Password" autocomplete="off" aria-describedby="passwordHelp">
-                                    <small id="passwordHelp" class="form-text text-muted">Do not enter your email password! Click to read more instructions</small>
+                                    id="passwordInput" placeholder="Password" autocomplete="off"
+                                    aria-describedby="passwordHelp">
+                                <small id="passwordHelp" class="form-text text-muted">Do not enter your email password!
+                                    Click to read more instructions</small>
                             </div>
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-outline-primary submitBtn">
@@ -64,7 +70,7 @@
             </div>
             <div class="modal fade" id="emailPasswordModal" tabindex="-1" aria-labelledby="emailPasswordModalLabel"
                 aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="emailPasswordModalLabel">Email Password Instructions</h5>
@@ -74,10 +80,32 @@
                         </div>
                         <div class="modal-body">
                             <p class="text-danger">Please DO NOT Enter your Email Password here!</p>
-                            <p class="text-dark">First your need to go to your email settings and turn on IMAP</p>
-                            <p class="text-dark">You need to generate your password from ...</p>
+                            <p class="text-dark">
+                                First you need to activate IMAP in your Gmail Account. Follow these steps:
+                            </p>
+                            <ol class="text-dark">
+                                <li>In Gmail, in the top right, click Settings</li>
+                                <li>At the top, click the Forwarding and POP/IMAP tab.</li>
+                                <li>In the IMAP Access section, select Enable IMAP.</li>
+                                <li>At the bottom, click Save Changes.</li>
+                            </ol>
+
+                            <p class="text-dark">The password to use should be generated using the following
+                                instructions:-
+                            </p>
+                            <ol class="text-dark">
+                                <li>Go to your Google Account.</li>
+                                <li>Select Security.</li>
+                                <li>Under "Signing in to Google," select 2-Step Verification.</li>
+                                <li>At the bottom of the page, select App passwords.</li>
+                                <li>Enter a name that helps you remember where you’ll use the app password.</li>
+                                <li>Select Generate.</li>
+                                <li>To enter the app password, follow the instructions on your screen. The app password
+                                    is the 16-character code that generates on your device.</li>
+                                <li>Select Done.</li>
+                            </ol>
                         </div>
-                        <div class="modal-footer">                            
+                        <div class="modal-footer">
                             <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
