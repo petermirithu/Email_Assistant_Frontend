@@ -3,11 +3,11 @@
 
 <head>
     <%- include('../partials/head'); %>
-        <title>Mail Whizz - Sign Up</title>        
+        <title>Mail Whizz - Sign Up</title>
         <link rel="stylesheet" href="css/authScreens.css">
 </head>
 
-<body>    
+<body>
     <!-- Page Content -->
     <div class="container-fluid">
         <div class="row">
@@ -15,47 +15,73 @@
             </div>
             <div class="col-md-6 center rightSide">
                 <%- include('../partials/notifications'); %>
-                
-                <h1>Create an Account</h1>
-                <h5><i>"Enter your details to get started!"</i></h5>
-                <form method="post" action="/apis/sign_up_user">
-                    <fieldset>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="fNameInput" class="form-label mt-4">First Name</label>
-                                    <input name="firstName" required type="text" class="form-control rounded" id="fNameInput"
-                                        placeholder="Enter first name">
+
+                    <h1>Create an Account</h1>
+                    <h5><i>"Enter your details to get started!"</i></h5>
+                    <form method="post" action="/apis/sign_up_user">
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="fNameInput" class="form-label mt-4">First Name</label>
+                                        <input name="firstName" required type="text" class="form-control rounded"
+                                            id="fNameInput" placeholder="Enter first name">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="lNameInput" class="form-label mt-4">Last Name</label>
+                                        <input name="lastName" required type="text" class="form-control rounded"
+                                            id=";NameInput" placeholder="Enter last name">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="lNameInput" class="form-label mt-4">Last Name</label>
-                                    <input name="lastName" required type="text" class="form-control rounded" id=";NameInput"
-                                        placeholder="Enter last name">
-                                </div>
+                            
+                            <div class="form-group">
+                                <label for="emailInput" class="form-label mt-4">Email address</label>
+                                <input name="email" required type="email" class="form-control rounded" id="emailInput"
+                                    aria-describedby="emailHelp" placeholder="Enter email">                                
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="emailInput" class="form-label mt-4">Email address</label>
-                            <input name="email" required type="email" class="form-control rounded" id="emailInput"
-                                aria-describedby="emailHelp" placeholder="Enter email">
-                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                                else.</small>
-                        </div>
-                        <div class="form-group">
-                            <label for="passwordInput" class="form-label mt-4">Password</label>
-                            <input name="password" required type="password" class="form-control rounded" id="passwordInput" placeholder="Password"
-                                autocomplete="off">
-                        </div>
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-outline-primary submitBtn">
-                                Sign Up
+
+                            <div style="float: right; margin-top: 4%;" data-bs-toggle="modal"
+                                data-bs-target="#emailPasswordModal">
+                                Info
+                            </div>
+                            <div class="form-group">
+                                <label for="passwordInput" class="form-label mt-4">Password</label>
+                                <input name="password" required type="password" class="form-control rounded"
+                                    id="passwordInput" placeholder="Password" autocomplete="off" aria-describedby="passwordHelp">
+                                    <small id="passwordHelp" class="form-text text-muted">Do not enter your email password! Click to read more instructions</small>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-outline-primary submitBtn">
+                                    Sign Up
+                                </button>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <a href="signIn" class="btn btn-link btn-sm">Already have an account? Sign In!</a>
+            </div>
+            <div class="modal fade" id="emailPasswordModal" tabindex="-1" aria-labelledby="emailPasswordModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="emailPasswordModalLabel">Email Password Instructions</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"></span>
                             </button>
                         </div>
-                    </fieldset>
-                </form>                
-                <a href="signIn" class="btn btn-link btn-sm">Already have an account? Sign In!</a>                
+                        <div class="modal-body">
+                            <p class="text-danger">Please DO NOT Enter your Email Password here!</p>
+                            <p class="text-dark">First your need to go to your email settings and turn on IMAP</p>
+                            <p class="text-dark">You need to generate your password from ...</p>
+                        </div>
+                        <div class="modal-footer">                            
+                            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
